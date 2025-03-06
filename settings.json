@@ -1,0 +1,48 @@
+{
+    "folderName" : {
+        "directoryPath" : "C:/Users/MY-PC/Desktop/test/",
+        "dirDefault" : "D:/test/error2/",
+        "typeSortSwitch" : true,
+        "defaultTagSwitch" : true,
+        "defaultTag" : "cmy",
+        "listTeg" : "['cmyk','cmy','bl2','b2','test','inv', 'cut', 'txt',]",
+        "dirList" : {
+            "cmyk": "D:/test/CMYK/",
+            "cmy": "D:/test/CMY/",
+            "bl2": "D:/test/BL2/",
+            "b2": "D:/test/BL2/",
+            "testcmyk": "D:/test/test_cmyk/",
+            "cmykinv": "D:/test/CMYK_inv/",
+            "bl2inv": "D:/test/BL2_inv/",
+            "cut": "D:/test/CMYK/",
+            "txt": "D:/test/txt/",
+            "testbl2inv" : "D:/test/test_bl2_inv/",
+            "testbl2" : "D:/test/testBl2/",
+            "testcmy" : "D:/test/testCmy/",
+            "testcmykinv" : "D:/test/testcmykinv/"
+    }
+},
+
+    "folderName2" : {
+        "directoryPath" : "C:/Users/MY-PC/Desktop/test2/",
+        "dirDefault" : "D:/test/error/",
+        "typeSortSwitch" : false,
+        "defaultTagSwitch" : false,
+        "defaultTag" : "cmy",
+        "listTeg" : "['cmyk','cmy','bl2','b2','test','inv', 'cut', 'txt',]",
+        "dirList" : {
+            "cmyk": "D:/test/CMYK/",
+            "cmy": "D:/test/CMY/",
+            "bl2": "D:/test/BL2/",
+            "b2": "D:/test/BL2/",
+            "testcmyk": "D:/test/test_cmyk/",
+            "cmykinv": "D:/test/CMYK_inv/",
+            "bl2inv": "D:/test/BL2_inv/",
+            "cut": "D:/test/CMYK/",
+            "txt": "D:/test/txt/",
+            "testbl2" : "D:/test/testBl2/",
+            "testcmy" : "D:/test/testCmy/",
+            "testcmykinv" : "D:/test/testcmykinv/"
+    }
+}
+}
