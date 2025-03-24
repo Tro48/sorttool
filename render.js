@@ -138,7 +138,6 @@ function createNewRootFolder() {
         dirList: {},
       }
     }
-    console.log(newSettingsFolder)
 
     newSettingsFolder[adresFolderId] = newFolder[adresFolderId];
 
