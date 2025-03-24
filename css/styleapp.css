@@ -1,0 +1,413 @@
+.main {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    background: #192541 url(../img/green-plain-concrete-textured-background-min.jpg) no-repeat center / cover;
+    color: #A18E68;
+    min-block-size: 100vh;
+    font-size: 14px;
+}
+
+.main_section {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(25, 37, 65, 0.6);
+    border-right: 2px solid #192541;
+}
+
+.folder_settings_section {
+    background-color: rgba(25, 37, 65, 0.5);
+}
+
+.section_title {
+    background-color: #586581;
+}
+
+.section__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.main_section__content_button_add{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border: 2px solid #192541;
+    border-radius: 5px;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: 0.3s;
+    background-color: transparent;
+    max-inline-size: 260px;
+    min-inline-size: 150px;
+}
+
+.button {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: 2px solid #192541;
+    border-radius: 5px;
+    transition: 0.3s;
+    max-inline-size: 25px;
+    max-block-size: 25px;
+    padding: 1px;
+}
+
+
+.animation_button:hover {
+    background-color: rgba(66, 77, 97, 0.4);
+    border-color: rgba(66, 77, 97, 0.4);
+    color: #e2c68a;
+    transition: 0.3s;
+}
+
+.material-icons-outlined {
+    font-size: 20px;
+}
+
+.main_section__content_folder {
+    margin-block-start: 5px;
+    /* border: 2px solid #192541;
+    border-radius: 5px; */
+}
+
+.main_section__content_folder_item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: transparent;
+    margin-block-end: 5px;
+    max-inline-size: 260px;
+    min-inline-size: 200px;
+    padding: 2px;
+    border: 2px solid #192541;
+    border-radius: 5px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.folder_item_title {
+    z-index: 3;
+}
+
+.active_tab::before{
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-color: rgba(25, 37, 65, 0.8);
+    border-radius: 50%;
+    top: 25%;
+    right: 5px;
+    position: absolute;
+    z-index: 2;
+}
+.active_tab::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: rgba(66, 77, 97, 0.4);
+    top: 0;
+    left: 0;
+    z-index: 1;
+    position: absolute;
+}
+
+.folder_settings_section_form {
+    padding: 5px;
+    border-block-end: 2px solid #192541;
+    display: none;
+}
+
+.folder_settings_section_form:target {
+    display: block;
+}
+
+.block_title {
+    padding-block: 5px;
+    text-transform: uppercase;
+}
+
+.block_settings_item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding-inline-end: 5px;
+    padding-block: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    border-block-start: 2px solid rgba(25, 37, 65, 0.7);
+}
+
+.root_folder_settings_form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.root_folder_name_title {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.settings_folder_root_block {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.default_tag_input_block {
+    justify-content: space-between;
+}
+
+.folder_link {
+    text-transform: none;
+}
+
+.button_save_name_folder {
+    background-color: transparent;
+    border: none;
+}
+
+.checkbox_list {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox_item_lable {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.block_settings_tag_list {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.open_modal_button {
+    min-inline-size: fit-content;
+    padding: 5px;
+}
+
+.tag_list{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    min-inline-size: 100%;
+    margin-inline: 5px;
+}
+
+.tag_list_item {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border: 2px solid #192541;
+    border-radius: 5px;
+    padding-block: 5px;
+}
+
+.add_tag_block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding-inline: 5px;
+}
+
+.add_tag_block:first-child {
+    border-inline-end: 2px solid #192541;
+}
+
+.button_save_settings_contayner {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.button_save_settings,
+.button_delete_settings {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding: 5px;
+    min-inline-size: 210px;
+    color: rgb(18, 147, 18);
+    white-space: nowrap;
+    text-transform: uppercase;
+}
+
+.button_delete_settings {
+     color: rgb(188, 27, 27);
+}
+
+.disabled_button {
+    background-color: rgba(73, 74, 77, 0.4);
+    border-color: rgba(73, 74, 77, 0.4);
+    color: #5d5a55;
+}
+
+.disabled_button:hover {
+    background-color: rgba(73, 74, 77, 0.4);
+    border-color: rgba(73, 74, 77, 0.4);
+    color: #5d5a55;
+}
+
+.modal_window {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(84, 88, 97, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 3;
+}
+
+.modal_window_active {
+    display: flex;
+}
+
+.modal_input_container {
+    position: relative;
+    max-inline-size:  fit-content;
+    inline-size: 100%;
+    min-block-size: 200px;
+    background-color: rgb(32, 48, 83, 0.8);
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.modal_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    gap: 5px;
+    margin: 5px;
+}
+
+.modal_content_form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-inline-size: 90%;
+}
+
+.input_folder_conteyner {
+    display: flex;
+    gap: 5px;
+}
+
+.input_folder_dir_contayner {
+    display: flex;
+    min-inline-size: 100%;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    border: 2px solid #192541;
+    border-radius: 5px;
+    block-size: 26px;
+}
+
+#inputNewTag,
+#inputNewFormat {
+    border: 2px solid #192541;
+    border-radius: 5px;
+    min-block-size: 26px;
+    background-color: transparent;
+}
+
+#inputNewTagButtonEsc {
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#inputNewTagButtonEsc .material-icons-outlined {
+    color: #A18E68;
+}
+
+.modal_submit_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    min-inline-size: fit-content;
+}
+
+.button_contayner {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    padding-block-start: 5px;
+}
+
+.dialog_qestion {
+    flex-direction: column;
+    align-items: center;
+    max-inline-size: fit-content;
+    gap: 5px;
+    padding: 15px;
+    background-color: rgba(25, 37, 65, 0.8);
+    border: 2px solid #192541;
+    border-radius: 5px;
+    text-transform: uppercase;
+    color: #A18E68;
+}
+
+.dialog_qestion[open] {
+    display: flex;
+}
+
+.dialog_qestion__button_block{
+    display: flex;
+    gap: 5px;
+}
+
+.button_qestions {
+    min-inline-size: 45px;
+    background-color: transparent;
+    border: 2px solid #192541;
+    border-radius: 5px;
+}
+
+.dialog_qestion__button_ok {
+    text-transform: uppercase;
+    color: green;
+}
+
+.dialog_qestion__button_cancel{
+    text-transform: uppercase;
+    color: red;
+}
+
+.delete_folder_tag {
+    color: red;
+}
+
+.management_program {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.play_program{
+    color: green;
+}
+
+.stop_program {
+    color: red;
+}

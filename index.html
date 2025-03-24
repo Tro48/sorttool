@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/global.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
+    />
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/styleapp.css" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <title>SortTool</title>
+  </head>
+  <body class="window">
+    <main class="main">
+      <section class="main_section">
+        <div class="section__content">
+          <button
+            id="addNewFolderRoot"
+            type="button"
+            class="main_section__content_button_add button_add_folder animation_button"
+          >
+            <h2 class="main_section__content_button_add_title">
+              Добавить папку
+            </h2>
+            <span class="material-icons-outlined"> create_new_folder </span>
+          </button>
+          <div class="main_section__content_folder">
+            <nav class="tabs_folder"></nav>
+          </div>
+          <div class="management_program">
+            <button type="button" class="play_program button animation_button" id="play">
+              <span class="material-icons-outlined"> play_circle_filled </span>
+            </button>
+            <button type="button" class="stop_program button animation_button" id="stop">
+              <span class="material-icons-outlined"> stop_circle </span>
+            </button>
+          </div>
+        </div>
+      </section>
+      <section class="folder_settings_section"></section>
+    </main>
+    <template id="folderLink_template">
+      <a href="" class="main_section__content_folder_item animation_button">
+        <span class="folder_item_title">папка</span>
+      </a>
+    </template>
+    <template id="sectionSettingsFolder_template">
+      <section id="" class="folder_settings_section_form">
+        <h1 class="block_title">Настройки главной папки</h1>
+        <div class="block_settings_item">
+          <div class="root_folder_name_title">
+            <h3>Имя папки:</h3>
+            <p class="root_folder_name"></p>
+          </div>
+          <form class="root_folder_settings_form" name="folderName">
+            <input
+              id="root_folder_name"
+              type="text"
+              name="rootFolderName"
+              placeholder="Новое имя папки"
+            />
+            <button
+              type="submit"
+              class="animation_button button"
+              id="button_save_name"
+            >
+              <span class="material-icons-outlined"> done </span>
+            </button>
+          </form>
+        </div>
+        <div class="block_settings_item">
+          <h3 class="content_settings_title">
+            Адрес папки:
+            <span class="root_folder_link"> </span>
+          </h3>
+          <button
+            id="refreshLinkRootFolder"
+            type="button"
+            class="button_add_folder animation_button button"
+          >
+            <span class="material-icons-outlined"> refresh </span>
+          </button>
+        </div>
+        <div class="block_settings_item">
+          <h3 class="content_settings_title">
+            Адрес папки для неизвестных файлов:
+            <span class="other_folder_link"></span>
+          </h3>
+          <button
+            id="otherFolderRefresh"
+            type="button"
+            class="button_add_folder animation_button button"
+          >
+            <span class="material-icons-outlined"> refresh </span>
+          </button>
+          <button
+            id="otherFolderAdd"
+            type="button"
+            class="button_add_folder animation_button button"
+          >
+            <span class="material-icons-outlined"> create_new_folder </span>
+          </button>
+        </div>
+        <div class="block_settings_item">
+          <ul class="checkbox_list">
+            <li class="checkbox_item">
+              <label class="checkbox_item_lable"
+                ><span>сортировка по формату файла</span>
+                <input
+                  class="checkbox_item_checkbox"
+                  type="checkbox"
+                  id="checkFiLeFormat"
+                  value="true"
+                />
+              </label>
+            </li>
+            <li class="checkbox_item">
+              <label class="checkbox_item_lable"
+                ><span>сортировка по имени файла</span>
+                <input
+                  class="checkbox_item_checkbox"
+                  type="checkbox"
+                  id="checkFileName"
+                  value="true"
+                />
+              </label>
+            </li>
+          </ul>
+          <ul class="checkbox_list">
+            <li class="checkbox_item">
+              <label class="checkbox_item_lable"
+                ><span>удалять неизвестные файлы</span>
+                <input
+                  class="checkbox_item_checkbox"
+                  type="checkbox"
+                  id="checkUndefDel"
+                  value="true"
+                />
+              </label>
+            </li>
+            <li class="checkbox_item">
+              <label class="checkbox_item_lable"
+                ><span>добавить дефолтный тег</span>
+                <input
+                  class="checkbox_item_checkbox"
+                  type="checkbox"
+                  id="checkDefauldTag"
+                  value="true"
+                />
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="block_settings_item default_tag_input_block">
+          <h3 class="root_folder_name_lable">
+            Дефолтный тег: <span class="default_tag_content"></span>
+          </h3>
+          <form class="root_folder_settings_form default_tag_form">
+            <input id="defaulTtagName" type="text" placeholder="Новый тег" />
+            <button
+              type="submit"
+              class="animation_button button"
+              id="defaulTtagButton"
+            >
+              <span class="material-icons-outlined"> done </span>
+            </button>
+          </form>
+        </div>
+        <div class="block_settings_item block_settings_tag_list">
+          <button type="button"
+                  class="animation_button open_modal_button button button_delete_settings"
+                  id="openModalButton"
+                > добавить папку
+                  <span class="material-icons-outlined"> add </span>
+            </button>
+          <ul class="tag_list">
+          </ul>
+        </div>
+        <div class="block_settings_item button_save_settings_contayner">
+          <button type="button" id="rootFolderSave" class="button_save_settings animation_button button">
+            сохранить настройки
+            <span class="material-icons-outlined"> save </span>
+          </button>
+            <button type="button" id="rootFolderDelete" class="button_delete_settings animation_button button"
+              >удалить папку
+              <span class="material-icons-outlined"> delete </span>
+            </button>
+        </div>
+        <div id="dialogAddTag" aria-label="окно добавления тега" class="modal_window modal_window_tag_input">
+          <div class="modal_input_container">
+            <div class="modal_content">
+              <h3 class="modal_content_add_title">введите тег или формат файла без точки и выберете папку</h3>
+              <form action="" class="modal_content_add_teg_form modal_content_form">
+                <lable for="#inputNewTag" class="input_lable">введите тег:</lable>
+                <input
+                  id="inputNewTag"
+                  type="text"
+                  placeholder="music, sound, audio"
+                  required
+                />
+                <label class="input_new_folder_title"> выберете папку:</label>
+                <div class="input_folder_conteyner">
+                  <div class="input_folder_dir_contayner">
+                    <p class="input_folder_dir">../</p>
+                    <button
+                      type="button"
+                      id="inputNewTagFolderButton"
+                      class="animation_button button"
+                    >
+                      <span class="material-icons-outlined">
+                        create_new_folder
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div class="button_contayner">
+                  <button
+                    type="submit"
+                    id="inputNewTagButtonSave"
+                    class="button_save_settings animation_button button modal_submit_button"
+                  >
+                    <span class="material-icons-outlined"> save </span> СОХРАНИТЬ
+                  </button>
+                  <button
+                    type="button"
+                    id="inputNewTagButtonEsc"
+                    class="button_delete_settings animation_button button"
+                  >
+                    <span class="material-icons-outlined"> close </span>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <dialog aria-labelledby="dialog-name" class="dialog_qestion">
+          <h3 class="dialog_qestion__title" id="dialog-name">вы уверены?</h3>
+          <p class="dialog_qestion__content">данные изменения нельзя отменить</p>
+          <div class="dialog_qestion__button_block">
+            <button type="button" id="buttonOk" class="dialog_qestion__button_ok animation_button button_qestions">да</button>
+            <button type="button" id="buttonCancel" class="dialog_qestion__button_cancel animation_button button_qestions">нет</button> 
+          </div>
+        </dialog>
+      </section>
+    </template>
+    <template id="template_tag_list_item">
+      <li class="tag_list_item">
+        <div class="add_tag_block">
+          <h3 class="add_tag_name_lable">
+            Тег:
+            <span id="" class="list_value_tag"></span>
+          </h3>
+        </div>
+        <div class="add_tag_block">
+          <h3 class="content_settings_title">Адрес папки:</h3>
+          <p class="tag_folder_link"></p>
+          <button type="button" id="deleteFolderTag"
+            class="animation_button button delete_folder_tag"
+          >
+            <span class="material-icons-outlined"> delete </span>
+          </button>
+        </div>
+      </li>
+    </template>
+    <script src="./render.js"></script>
+  </body>
+</html>
