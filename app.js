@@ -9,6 +9,10 @@ ipcMain.on('click-button', (event, arg) => {
   event.returnValue = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
 })
 
+ipcMain.on('click-openFile', (event, arg) => {
+  event.returnValue = dialog.showOpenDialogSync({ properties: ['openFile'] });
+})
+
 const createWindow = () => {
   
   win = new BrowserWindow({

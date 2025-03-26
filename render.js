@@ -247,8 +247,8 @@ buttonStop.addEventListener('click', () => {
 })
 
 buttonDownloadSettings.addEventListener('click', () =>{
-  document.querySelector('#fileInput').click();
+  window.preload.downloadSettings();
 })
 buttonUploadSettings.addEventListener('click', () => {
-window.preload.uploadSettings();
+  window.preload.uploadSettings();
 })

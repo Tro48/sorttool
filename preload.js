@@ -51,7 +51,8 @@ contextBridge.exposeInMainWorld('preload', {
     console.log('stop')
   },
   downloadSettings: () => {
-    console.log('download')
+    jsonObj = ipcRenderer.sendSync('click-openFile', "");
+    return jsonObj;
   },
   uploadSettings: () => {
     console.log('upload')
