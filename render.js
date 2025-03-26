@@ -35,7 +35,6 @@ function definesClickForButton(evt, func) {
   })
 }
 
-
 function pushForButton(id, evt) {
   const sectionParent = evt.target.closest('.folder_settings_section_form');
   const inputForm = evt.target.closest(id).previousElementSibling;
@@ -250,5 +249,5 @@ buttonDownloadSettings.addEventListener('click', () =>{
   window.preload.downloadSettings();
 })
 buttonUploadSettings.addEventListener('click', () => {
-  window.preload.uploadSettings();
+  console.log(window.preload.uploadSettings());
 })

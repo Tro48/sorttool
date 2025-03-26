@@ -51,11 +51,24 @@ contextBridge.exposeInMainWorld('preload', {
     console.log('stop')
   },
   downloadSettings: () => {
-    jsonObj = ipcRenderer.sendSync('click-openFile', "");
-    return jsonObj;
+    let result
+    // console.log(ipcRenderer.sendSync('click-openFile', "")[0])
+    fs.readFile(ipcRenderer.sendSync('click-openFile', "")[0], 'utf8', (err, data) => {
+      if (err) throw err;
+      result = JSON.parse(data);
+      fs.readFile('settings.json', 'utf8', (err, data) => {
+        if (err) throw err;
+        let jsonData = JSON.parse(data);
+        jsonData = result;
+        fs.writeFile('settings.json', JSON.stringify(jsonData, null, 2), (err) => {
+          if (err) throw err;
+        });
+      });
+    })
+    
   },
   uploadSettings: () => {
-    console.log('upload')
+    ipcRenderer.sendSync('click-upload', "");
   }
 });
 

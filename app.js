@@ -7,10 +7,21 @@ let win
 
 ipcMain.on('click-button', (event, arg) => {
   event.returnValue = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
-})
+});
 
 ipcMain.on('click-openFile', (event, arg) => {
-  event.returnValue = dialog.showOpenDialogSync({ properties: ['openFile'] });
+  event.returnValue = dialog.showOpenDialogSync({
+    filters: [{
+      name: 'json Files',
+      extensions: ['json']
+    }], properties: ['openFile'] });
+});
+
+ipcMain.on('click-upload', (event, arg) => {
+  event.returnValue = dialog.showSaveDialogSync({filters: [{
+    name: 'json Files',
+    extensions: ['json'] 
+  }], properties: [] });
 })
 
 const createWindow = () => {
