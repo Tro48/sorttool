@@ -14,6 +14,8 @@ const rootFolderNameInputButton = page.querySelector('#root_folder_name_button')
 const folderSettingsSection = page.querySelector('.folder_settings_section');
 const buttonPlay = page.querySelector('.play_program');
 const buttonStop = page.querySelector('.stop_program');
+const buttonDownloadSettings = page.querySelector('.download_settings');
+const buttonUploadSettings = page.querySelector('.upload_settings');
 const buttonsId = ['#addNewFolderRoot', '#button_save_name', '#refreshLinkRootFolder', '#otherFolderRefresh', '#otherFolderAdd',
   '#checkFiLeFormat', '#checkFileName', '#checkUndefDel', '#checkDefauldTag',
   '#defaulTtagButton', '#openModalButton', '#inputNewTagButtonEsc', '#inputNewTagButtonSave',
@@ -242,4 +244,11 @@ buttonPlay.addEventListener('click', () => {
 
 buttonStop.addEventListener('click', () => {
   buttonPlay.children[0].textContent = 'play_circle_filled'
+})
+
+buttonDownloadSettings.addEventListener('click', () =>{
+  document.querySelector('#fileInput').click();
+})
+buttonUploadSettings.addEventListener('click', () => {
+window.preload.uploadSettings();
 })

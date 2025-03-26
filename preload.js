@@ -3,7 +3,7 @@ const path = require('path');
 const { contextBridge, ipcRenderer } = require('electron');
 const { console } = require('inspector');
 const settingsApp = require('./settings.json');
-let jsonObj
+const jsonObj = require('./settings.json');
 let dirFolder;
 let folderName = []
 let interevalId
@@ -12,17 +12,17 @@ for (key in settingsApp) {
   folderName.push(key)
 }
 
-fs.readFile('settings.json', 'utf8', (err, data) => { 
-  if (err){
-    fs.writeFileSync('settings.json', JSON.stringify({}, null, 2));
-    fs.readFile('settings.json', 'utf8', (err, data) => {
-      if (err) throw err;
-      jsonObj = JSON.parse(data);
-     })
-  } try {
-    jsonObj = JSON.parse(data);
-  } catch {}
-})
+// fs.readFile('settings.json', 'utf8', (err, data) => { 
+//   if (err){
+//     fs.writeFileSync('settings.json', JSON.stringify({}, null, 2));
+//     fs.readFile('settings.json', 'utf8', (err, data) => {
+//       if (err) throw err;
+//       jsonObj = JSON.parse(data);
+//      })
+//   } try {
+//     jsonObj = JSON.parse(data);
+//   } catch {}
+// })
 
 contextBridge.exposeInMainWorld('preload', {
   addFolder: () => {
@@ -49,6 +49,12 @@ contextBridge.exposeInMainWorld('preload', {
   stopScript: () => { 
     clearInterval(interevalId)
     console.log('stop')
+  },
+  downloadSettings: () => {
+    console.log('download')
+  },
+  uploadSettings: () => {
+    console.log('upload')
   }
 });
 
