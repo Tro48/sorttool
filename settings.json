@@ -1,32 +1,18 @@
 {
-  "0f9bb36f0fad43f8b10d633d8f0f9804": {
-    "folderPath": "C:\\Users\\MY-PC\\Desktop\\IND1\\",
-    "rootFolderName": "ind1",
-    "rootFolderId": "0f9bb36f0fad43f8b10d633d8f0f9804",
-    "dirDefault": "C:\\Users\\MY-PC\\Desktop\\other1\\",
+  "9c783af8f8d140b5b8fa27b5cf6e31c9": {
+    "folderPath": "C:\\Users\\User\\Desktop\\test1\\",
+    "rootFolderName": "test1",
+    "rootFolderId": "9c783af8f8d140b5b8fa27b5cf6e31c9",
+    "dirDefault": "C:\\Users\\User\\Desktop\\defoult\\",
     "typeSortFormatFile": false,
     "typeSortTagFile": false,
     "deleteUndefinedFile": false,
     "defaultTagSwitch": true,
     "listTag": [
-      "BL2",
-      "B2",
-      "BL2_INV",
-      "B2_INV",
-      "CMY",
-      "CMYK",
-      "CMYK_INV",
-      "TEST"
+      "CMYK"
     ],
     "dirList": {
-      "BL2": "C:\\Users\\MY-PC\\Desktop\\test\\BL2\\",
-      "B2": "C:\\Users\\MY-PC\\Desktop\\test\\BL2\\",
-      "BL2_INV": "C:\\Users\\MY-PC\\Desktop\\test\\BL2_inv\\",
-      "B2_INV": "C:\\Users\\MY-PC\\Desktop\\test\\BL2_inv\\",
-      "CMY": "C:\\Users\\MY-PC\\Desktop\\test\\CMY\\",
-      "CMYK": "C:\\Users\\MY-PC\\Desktop\\test\\CMYK\\",
-      "CMYK_INV": "C:\\Users\\MY-PC\\Desktop\\test\\CMYK_inv\\",
-      "TEST": "C:\\Users\\MY-PC\\Desktop\\test2\\test\\"
+      "CMYK": "C:\\Users\\User\\Desktop\\cmyk_test\\"
     }
   }
 }

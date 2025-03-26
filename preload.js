@@ -83,17 +83,18 @@ function parserFile(files, settings) {
           }
         }
         if (settings.dirList[tag]) {
-          fs.copyFile(path.resolve(settings.folderPath, item), path.resolve(settings.dirList[tag], item.replaceAll(' ', '_')), err => { if (err) throw err; })
+          console.log(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'))
+          fs.renameSync(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'))
           console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`)
         } else {
-          fs.copyFile(path.resolve(settings.folderPath, item), path.resolve(settings.dirDefault, item.replaceAll(' ', '_')), err => { if (err) throw err; })
+          fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => { if (err) throw err; })
           console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку.`)
         }
       } else {
-        fs.copyFile(path.resolve(settings.folderPath, item), path.resolve(settings.dirDefault, item.replaceAll(' ', '_')), err => { if (err) throw err; })
+        fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => { if (err) throw err; })
         console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}.`)
       }
-      fs.unlink(path.resolve(settings.folderPath, item), (err) => { if (err) throw err; })
+      // fs.unlink(settings.folderPath + item, (err) => { if (err) throw err; })
     })
   }
 }
