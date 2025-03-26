@@ -1,1 +1,24 @@
-{}
+{
+  "6fe79e3411094a84a469468b9a85b48a": {
+    "folderPath": "C:\\Users\\MY-PC\\Desktop\\IND1\\",
+    "rootFolderName": "ind1",
+    "rootFolderId": "6fe79e3411094a84a469468b9a85b48a",
+    "typeSortFormatFile": false,
+    "typeSortTagFile": false,
+    "deleteUndefinedFile": false,
+    "defaultTagSwitch": true,
+    "listTag": [],
+    "dirList": {}
+  },
+  "eee1567456c24ef39c83e4d432c944db": {
+    "folderPath": "C:\\Users\\MY-PC\\Desktop\\other1\\",
+    "rootFolderName": "other1",
+    "rootFolderId": "eee1567456c24ef39c83e4d432c944db",
+    "typeSortFormatFile": false,
+    "typeSortTagFile": false,
+    "deleteUndefinedFile": false,
+    "defaultTagSwitch": true,
+    "listTag": [],
+    "dirList": {}
+  }
+}

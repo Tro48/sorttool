@@ -249,5 +249,5 @@ buttonDownloadSettings.addEventListener('click', () =>{
   window.preload.downloadSettings();
 })
 buttonUploadSettings.addEventListener('click', () => {
-  console.log(window.preload.uploadSettings());
+  window.preload.uploadSettings();
 })

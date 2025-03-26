@@ -18,10 +18,12 @@ ipcMain.on('click-openFile', (event, arg) => {
 });
 
 ipcMain.on('click-upload', (event, arg) => {
-  event.returnValue = dialog.showSaveDialogSync({filters: [{
+  event.returnValue = dialog.showSaveDialogSync({
+    defaultPath: 'settings.json',filters: [{
     name: 'json Files',
     extensions: ['json'] 
   }], properties: [] });
+
 })
 
 const createWindow = () => {

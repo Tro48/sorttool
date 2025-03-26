@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const { contextBridge, ipcRenderer } = require('electron');
+const { contextBridge, ipcRenderer, dialog } = require('electron');
 const { console } = require('inspector');
 const settingsApp = require('./settings.json');
-const jsonObj = require('./settings.json');
 let dirFolder;
 let folderName = []
 let interevalId
@@ -11,18 +10,6 @@ let interevalId
 for (key in settingsApp) {
   folderName.push(key)
 }
-
-// fs.readFile('settings.json', 'utf8', (err, data) => { 
-//   if (err){
-//     fs.writeFileSync('settings.json', JSON.stringify({}, null, 2));
-//     fs.readFile('settings.json', 'utf8', (err, data) => {
-//       if (err) throw err;
-//       jsonObj = JSON.parse(data);
-//      })
-//   } try {
-//     jsonObj = JSON.parse(data);
-//   } catch {}
-// })
 
 contextBridge.exposeInMainWorld('preload', {
   addFolder: () => {
@@ -41,7 +28,7 @@ contextBridge.exposeInMainWorld('preload', {
     });
   },
   readJson: () => {
-    return jsonObj;
+    return settingsApp;
   }, 
   playScript: () => {
     interevalId = setInterval(checkForNewFiles, 2000)
@@ -52,7 +39,6 @@ contextBridge.exposeInMainWorld('preload', {
   },
   downloadSettings: () => {
     let result
-    // console.log(ipcRenderer.sendSync('click-openFile', "")[0])
     fs.readFile(ipcRenderer.sendSync('click-openFile', "")[0], 'utf8', (err, data) => {
       if (err) throw err;
       result = JSON.parse(data);
@@ -68,9 +54,12 @@ contextBridge.exposeInMainWorld('preload', {
     
   },
   uploadSettings: () => {
-    ipcRenderer.sendSync('click-upload', "");
+    let result = ipcRenderer.sendSync('click-upload', '');
+    fs.writeFileSync(result, JSON.stringify(settingsApp, null, 2));
   }
 });
+
+
 
 function checkForNewFiles(){
   console.log('start')
@@ -127,4 +116,3 @@ function additionalSettings(arr, settings) {
     arr.pop()
   }
 }
-
