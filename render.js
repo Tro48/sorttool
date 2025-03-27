@@ -21,7 +21,7 @@ const buttonsId = ['#addNewFolderRoot', '#button_save_name', '#refreshLinkRootFo
   '#defaulTtagButton', '#openModalButton', '#inputNewTagButtonEsc', '#inputNewTagButtonSave',
   '#inputNewTagFolderButton', '#rootFolderDelete', '#buttonCancel', '#rootFolderSave', '#buttonOk', '#play', '#stop'];
 
-renderSettings(newSettingsFolder);
+renderSettings();
 
 page.addEventListener('click', (evt) => {
   definesClickForButton(evt, pushForButton);
@@ -246,7 +246,13 @@ buttonStop.addEventListener('click', () => {
 })
 
 buttonDownloadSettings.addEventListener('click', () =>{
+  tabsList.innerHTML = ''
+  sectionFolderSettings.innerHTML = ''
   window.preload.downloadSettings();
+  let result = JSON.parse(window.preload.readNewJson())
+  newSettingsFolder = result
+  renderSettings();
+
 })
 buttonUploadSettings.addEventListener('click', () => {
   window.preload.uploadSettings(newSettingsFolder);

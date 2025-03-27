@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { contextBridge, ipcRenderer, dialog } = require('electron');
 const { console } = require('inspector');
-const settingsApp = require('./settings.json');
+const settingsApp = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
 let dirFolder;
 let folderName = []
 let interevalId
@@ -26,9 +26,12 @@ contextBridge.exposeInMainWorld('preload', {
         if (err) throw err;
       });
     });
+  }, readNewJson: () => {
+    let result = fs.readFileSync('settings.json', 'utf8');
+    return result
   },
   readJson: () => {
-    return settingsApp;
+    return settingsApp
   }, 
   playScript: () => {
     interevalId = setInterval(checkForNewFiles, 2000)
@@ -38,28 +41,19 @@ contextBridge.exposeInMainWorld('preload', {
     console.log('stop')
   },
   downloadSettings: () => {
-    let result
-    fs.readFile(ipcRenderer.sendSync('click-openFile', "")[0], 'utf8', (err, data) => {
+    fs.readFileSync('settings.json', 'utf8', (err, data) => {
       if (err) throw err;
-      result = JSON.parse(data);
-      fs.readFile('settings.json', 'utf8', (err, data) => {
-        if (err) throw err;
-        let jsonData = JSON.parse(data);
-        jsonData = result;
-        fs.writeFile('settings.json', JSON.stringify(jsonData, null, 2), (err) => {
-          if (err) throw err;
-        });
-      });
+      let clearJson = {}
+      fs.writeFileSync('settings.json', JSON.stringify(clearJson))
     })
-    
+    let result = JSON.parse(fs.readFileSync(ipcRenderer.sendSync('click-openFile', "")[0], 'utf8'));
+    fs.writeFileSync('settings.json', JSON.stringify(result));
   },
   uploadSettings: (settings) => {
     let result = ipcRenderer.sendSync('click-upload', '');
     fs.writeFileSync(result, JSON.stringify(settings, null, 2));
   }
 });
-
-
 
 function checkForNewFiles(){
   console.log('start')
