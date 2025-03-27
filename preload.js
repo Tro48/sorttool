@@ -53,9 +53,9 @@ contextBridge.exposeInMainWorld('preload', {
     })
     
   },
-  uploadSettings: () => {
+  uploadSettings: (settings) => {
     let result = ipcRenderer.sendSync('click-upload', '');
-    fs.writeFileSync(result, JSON.stringify(settingsApp, null, 2));
+    fs.writeFileSync(result, JSON.stringify(settings, null, 2));
   }
 });
 

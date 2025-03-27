@@ -1,24 +1,18 @@
 {
-  "6fe79e3411094a84a469468b9a85b48a": {
-    "folderPath": "C:\\Users\\MY-PC\\Desktop\\IND1\\",
-    "rootFolderName": "ind1",
-    "rootFolderId": "6fe79e3411094a84a469468b9a85b48a",
+  "9c783af8f8d140b5b8fa27b5cf6e31c9": {
+    "folderPath": "C:\\Users\\User\\Desktop\\test1\\",
+    "rootFolderName": "test1",
+    "rootFolderId": "9c783af8f8d140b5b8fa27b5cf6e31c9",
+    "dirDefault": "C:\\Users\\User\\Desktop\\defoult\\",
     "typeSortFormatFile": false,
     "typeSortTagFile": false,
     "deleteUndefinedFile": false,
     "defaultTagSwitch": true,
-    "listTag": [],
-    "dirList": {}
-  },
-  "eee1567456c24ef39c83e4d432c944db": {
-    "folderPath": "C:\\Users\\MY-PC\\Desktop\\other1\\",
-    "rootFolderName": "other1",
-    "rootFolderId": "eee1567456c24ef39c83e4d432c944db",
-    "typeSortFormatFile": false,
-    "typeSortTagFile": false,
-    "deleteUndefinedFile": false,
-    "defaultTagSwitch": true,
-    "listTag": [],
-    "dirList": {}
+    "listTag": [
+      "CMYK"
+    ],
+    "dirList": {
+      "CMYK": "C:\\Users\\User\\Desktop\\cmyk_test\\"
+    }
   }
 }
