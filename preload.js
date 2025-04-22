@@ -79,10 +79,10 @@ function parserFile(files, settings) {
       if (arrTag.length) {
         let tag = arrTag.join('');
         if (arrTag.length > 1) {
-          if (settings.dirList[arrTag.join('')]) {
-            tag = arrTag.join('');
+          if (settings.dirList[arrTag.join('_')]) {
+            tag = arrTag.join('_');
           } else {
-            tag = arrTag.reverse().join('');
+            tag = arrTag.reverse().join('_');
           }
         }
         if (settings.dirList[tag]) {

@@ -1,5 +1,6 @@
 
 let newSettingsFolder = window.preload.readJson();
+// let newSettingsFolder
 let valuesInput = {};
 let interevalId
 const page = document.querySelector('.window');
@@ -21,8 +22,7 @@ const buttonsId = ['#addNewFolderRoot', '#button_save_name', '#refreshLinkRootFo
   '#defaulTtagButton', '#openModalButton', '#inputNewTagButtonEsc', '#inputNewTagButtonSave',
   '#inputNewTagFolderButton', '#rootFolderDelete', '#buttonCancel', '#rootFolderSave', '#buttonOk', '#play', '#stop'];
 
-renderSettings();
-
+renderSettings(newSettingsFolder)
 page.addEventListener('click', (evt) => {
   definesClickForButton(evt, pushForButton);
 })
@@ -71,17 +71,18 @@ function pushForButton(id, evt) {
     let newTag = sectionParent.querySelector('#inputNewTag').value;
     let newDir = sectionParent.querySelector('.input_folder_dir').textContent;
     if (newTag && newDir && newDir !== '../') {
-      let newArr = newTag.toUpperCase().split(', ');
+      let newArr = newTag.replace(/,/g, '_').replace(/\s/g, '').toUpperCase().split('_');
+      let unikArr = Array.from(new Set(newArr))
       let tagsList = newSettingsFolder[sectionParent.id].listTag;
       let newTagList;
       if (tagsList.length) {
-        newArr.forEach((newItem) => {
+        unikArr.forEach((newItem) => {
           tagsList.push(newItem);
         })
         newTagList = new Set(tagsList);
-        newArr = Array.from(newTagList);
+        unikArr = Array.from(newTagList);
       }
-      newSettingsFolder[sectionParent.id].listTag = newArr;
+      newSettingsFolder[sectionParent.id].listTag = unikArr;
       newTag.toUpperCase().split(', ').forEach((tag) => {
         newSettingsFolder[sectionParent.id].dirList[tag] = newDir + "\\";
       })
@@ -109,7 +110,7 @@ function pushForButton(id, evt) {
   } else if (id === '#stop') {
     window.preload.stopScript();
   }
-  renderSettings();
+  renderSettings(newSettingsFolder);
 }
 
 function createNewRootFolder() {
@@ -118,7 +119,7 @@ function createNewRootFolder() {
   let adresFolder = window.preload.addFolder();
   if (adresFolder) {
     //обработка адреса папки
-    let adresFolderName = adresFolder[0].replace(/\\/g, '_').toLowerCase().split('_');
+    let adresFolderName = adresFolder[0].toLowerCase().split('\\');
     adresFolderName = adresFolderName[adresFolderName.length - 1];
 
     let adresFolderId = crypto.randomUUID().replace(/-/g, '');
@@ -148,7 +149,7 @@ function createNewRootFolder() {
   } else { console.log('no folder') }
 }
 
-function renderAllFolder(){
+function renderAllFolder(newSettingsFolder){
   if (JSON.stringify(newSettingsFolder)){
     Object.keys(newSettingsFolder).forEach((item) => {
       const folderItemLink = templateFolderLink.querySelector('.main_section__content_folder_item').cloneNode(true);
@@ -162,9 +163,9 @@ function renderAllFolder(){
   
 }
 
-function renderSettings() {
+function renderSettings(newSettingsFolder) {
   if (!tabsList.children.length){
-    renderAllFolder()
+    renderAllFolder(newSettingsFolder)
   }
   const allSectionSettings = sectionFolderSettings.querySelectorAll('.folder_settings_section_form');
     allSectionSettings.forEach((item) => {
@@ -220,7 +221,12 @@ function addFolderTagItem(obj, context) {
     folderTagItem.querySelector('.delete_folder_tag').addEventListener('click', (evt) => {
       let itemId = evt.target.closest('.tag_list_item').id
       delete obj.dirList[itemId];
-      obj.listTag = obj.listTag.filter((i) => { return i !== itemId })
+      if (Object.keys(obj.dirList).length){
+        const newDirListTags = Object.keys(obj.dirList).join('_').split('_');
+        obj.listTag = Array.from(new Set(newDirListTags));
+      }else {
+        obj.listTag = [];
+      }
       deleteItemTag(folderTagItem);
     })
     try {
