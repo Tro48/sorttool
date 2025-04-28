@@ -1,67 +1,17 @@
 {
-  "9d7497e617ee43069cc111f6efad51dc": {
-    "folderPath": "C:\\Users\\MY-PC\\Desktop\\IND1\\",
-    "rootFolderName": "ind1",
-    "rootFolderId": "9d7497e617ee43069cc111f6efad51dc",
-    "dirDefault": "C:\\Users\\MY-PC\\Desktop\\test\\other\\",
-    "typeSortFormatFile": false,
-    "typeSortTagFile": false,
-    "deleteUndefinedFile": false,
-    "defaultTagSwitch": false,
-    "listTag": [
-      "CMYK",
-      "BL2",
-      "B2",
-      "INV",
-      "CMY",
-      "O",
-      "TEST"
-    ],
-    "dirList": {
-      "CMYK": "C:\\Users\\MY-PC\\Desktop\\test\\CMYK\\",
-      "BL2": "C:\\Users\\MY-PC\\Desktop\\test\\BL2\\",
-      "B2": "C:\\Users\\MY-PC\\Desktop\\test\\BL2\\",
-      "BL2_INV": "C:\\Users\\MY-PC\\Desktop\\test\\BL2_inv\\",
-      "B2_INV": "C:\\Users\\MY-PC\\Desktop\\test\\BL2_inv\\",
-      "CMY": "C:\\Users\\MY-PC\\Desktop\\test\\CMY\\",
-      "CMYK_INV": "C:\\Users\\MY-PC\\Desktop\\test\\CMYK_inv\\",
-      "CMYK_O": "C:\\Users\\MY-PC\\Desktop\\test\\Cmyk_o\\",
-      "TEST_CMYK": "C:\\Users\\MY-PC\\Desktop\\test\\test_cmyk\\",
-      "TEST_CMY": "C:\\Users\\MY-PC\\Desktop\\test\\test_cmy\\",
-      "TEST_BL2": "C:\\Users\\MY-PC\\Desktop\\test\\test_bl2\\"
-    }
-  },
-  "4acae3e87d984292b322f73d550e5166": {
-    "folderPath": "C:\\Users\\MY-PC\\Desktop\\IND2\\",
-    "rootFolderName": "ind2",
-    "rootFolderId": "4acae3e87d984292b322f73d550e5166",
+  "4e04485856bd4eeb89f750fbfddfe579": {
+    "folderPath": "Z:\\Обмен файлами\\ЦИФРОВАЯ ПЕЧАТЬ\\Indigo\\indigo1\\",
+    "rootFolderName": "indigo1",
+    "rootFolderId": "4e04485856bd4eeb89f750fbfddfe579",
     "typeSortFormatFile": false,
     "typeSortTagFile": false,
     "deleteUndefinedFile": false,
     "defaultTagSwitch": true,
     "listTag": [
-      "BL2",
-      "B2",
-      "INV",
-      "CMY",
-      "CMYK",
-      "O",
-      "TEST"
+      "CMYK"
     ],
     "dirList": {
-      "BL2": "C:\\Users\\MY-PC\\Desktop\\test2\\BL2\\",
-      "B2": "C:\\Users\\MY-PC\\Desktop\\test2\\BL2\\",
-      "BL2_INV": "C:\\Users\\MY-PC\\Desktop\\test2\\BL2_inv\\",
-      "B2_INV": "C:\\Users\\MY-PC\\Desktop\\test2\\BL2_inv\\",
-      "CMY": "C:\\Users\\MY-PC\\Desktop\\test2\\CMY\\",
-      "CMYK": "C:\\Users\\MY-PC\\Desktop\\test2\\CMYK\\",
-      "CMYK_INV": "C:\\Users\\MY-PC\\Desktop\\test2\\CMYK_inv\\",
-      "CMYK_O": "C:\\Users\\MY-PC\\Desktop\\test2\\Cmyk_o\\",
-      "TEST_BL2": "C:\\Users\\MY-PC\\Desktop\\test2\\test_bl2\\",
-      "TEST_B2": "C:\\Users\\MY-PC\\Desktop\\test2\\test_bl2\\",
-      "TEST_CMY": "C:\\Users\\MY-PC\\Desktop\\test2\\test_cmy\\",
-      "TEST_CMYK": "C:\\Users\\MY-PC\\Desktop\\test2\\test_cmyk\\"
-    },
-    "dirDefault": "C:\\Users\\MY-PC\\Desktop\\test2\\other\\"
+      "CMYK": "\\\\HPRIP1\\Jobs\\CMYK_PP\\"
+    }
   }
 }

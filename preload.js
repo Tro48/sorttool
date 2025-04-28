@@ -87,17 +87,47 @@ function parserFile(files, settings) {
         }
         if (settings.dirList[tag]) {
           console.log(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'))
-          fs.renameSync(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'))
-          console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`)
+          fs.copyFile(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'), err => { 
+            if (err) {
+              console.log('Ошибка копирования')
+            }else {
+              fs.unlink(settings.folderPath + item, (err) => {
+                 if (err){
+                   console.log('Ошибка удаления')
+                 } else{
+                   console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`)
+                 }
+                })
+            }
+          });
         } else {
-          fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => { if (err) throw err; })
-          console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку.`)
+          fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => { 
+            if (err){
+              console.log('Ошибка копирования в дефолтную папку')
+            }else{
+              console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку.`);
+              fs.unlink(settings.folderPath + item, (err) => {
+                if (err) {
+                  console.log('Ошибка удаления')
+                }
+              })
+            }
+          })
         }
       } else {
-        fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => { if (err) throw err; })
-        console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}.`)
+        fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => { 
+          if (err){
+            console.log('Ошибка копирования в дефолтную папку')
+          } else {
+            console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}.`);
+            fs.unlink(settings.folderPath + item, (err) => {
+              if (err) {
+                console.log('Ошибка удаления')
+              }
+            })
+          }
+        })     
       }
-      // fs.unlink(settings.folderPath + item, (err) => { if (err) throw err; })
     })
   }
 }

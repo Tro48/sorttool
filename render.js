@@ -122,7 +122,7 @@ function createNewRootFolder() {
     let adresFolderName = adresFolder[0].toLowerCase().split('\\');
     adresFolderName = adresFolderName[adresFolderName.length - 1];
 
-    let adresFolderId = crypto.randomUUID().replace(/-/g, '');
+    let adresFolderId = 'n' + crypto.randomUUID().replace(/-/g, '');
     folderItemLink.setAttribute('href', `#${adresFolderId}`);
     itemSettings.setAttribute('id', adresFolderId);
     const newFolder = {
