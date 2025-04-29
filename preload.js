@@ -32,11 +32,11 @@ contextBridge.exposeInMainWorld('preload', {
   },
   readJson: () => {
     return settingsApp
-  }, 
-  playScript: () => {
-    interevalId = setInterval(checkForNewFiles, 2000)
   },
-  stopScript: () => { 
+  playScript: () => {
+    interevalId = setInterval(checkForNewFiles, 10000)
+  },
+  stopScript: () => {
     clearInterval(interevalId)
     console.log('stop')
   },
@@ -55,7 +55,7 @@ contextBridge.exposeInMainWorld('preload', {
   }
 });
 
-function checkForNewFiles(){
+function checkForNewFiles() {
   console.log('start')
   folderName.forEach((key) => {
     fs.readdir(settingsApp[key].folderPath, (err, files) => {
@@ -86,47 +86,63 @@ function parserFile(files, settings) {
           }
         }
         if (settings.dirList[tag]) {
-          console.log(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'))
-          fs.copyFile(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'), err => { 
-            if (err) {
-              console.log('Ошибка копирования')
-            }else {
-              fs.unlink(settings.folderPath + item, (err) => {
-                 if (err){
-                   console.log('Ошибка удаления')
-                 } else{
-                   console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`)
-                 }
-                })
-            }
-          });
-        } else {
-          fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => { 
+          fs.copyFile(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'), err =>{
             if (err){
-              console.log('Ошибка копирования в дефолтную папку')
-            }else{
-              console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку.`);
-              fs.unlink(settings.folderPath + item, (err) => {
-                if (err) {
-                  console.log('Ошибка удаления')
-                }
-              })
+              console.log('Ошибка копирования ' + err);
             }
-          })
-        }
-      } else {
-        fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => { 
-          if (err){
-            console.log('Ошибка копирования в дефолтную папку')
-          } else {
-            console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}.`);
+            console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`);
             fs.unlink(settings.folderPath + item, (err) => {
               if (err) {
-                console.log('Ошибка удаления')
+                console.log('Ошибка удаления ' + err)
               }
-            })
+            });
+          });
+          // try{
+          //   fs.copyFileSync(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'));
+          //   console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`);
+          // }catch(err){
+          //   console.log('Ошибка копирования ' + err);
+          // }
+          
+          // , err => {
+          //   if (err) {
+          //     console.log('Ошибка копирования ' + err)
+          //   } else {
+          //     console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`);
+          //   }
+          // });
+          // fs.unlink(settings.folderPath + item, (err) => {
+          //   if (err) {
+          //     console.log('Ошибка удаления ' + err)
+          //   }
+          // });
+        } else {
+          fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => {
+            if (err) {
+              console.log('Ошибка копирования в дефолтную папку ' + err)
+            }else{
+              console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку.`);
+            }
+          });
+          fs.unlink(settings.folderPath + item, (err) => {
+            if (err) {
+              console.log('Ошибка удаления ' + err)
+            }
+          });
+        }
+      } else {
+        fs.copyFile(settings.folderPath + item, settings.dirDefault + item.replaceAll(' ', '_'), err => {
+          if (err) {
+            console.log('Ошибка копирования в дефолтную папку ' + err)
+          }else{
+            console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${item} перемещён в дефолтную папку ${settings.dirDefault}.`);
           }
-        })     
+        });
+        fs.unlink(settings.folderPath + item, (err) => {
+          if (err) {
+            console.log('Ошибка удаления ' + err)
+          }
+        });
       }
     })
   }
