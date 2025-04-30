@@ -35,7 +35,8 @@ contextBridge.exposeInMainWorld('preload', {
     return settingsApp
   },
   playScript: () => {
-    interevalId = setInterval(checkForNewFiles, 1000)
+    console.log('start')
+    interevalId = setInterval(checkForNewFiles, 3000)
   },
   stopScript: () => {
     clearInterval(interevalId)
@@ -57,8 +58,6 @@ contextBridge.exposeInMainWorld('preload', {
 });
 
 function checkForNewFiles() {
-  console.log('start')
-  console.log(filesRootPage)
   folderName.forEach((key) => {
     fs.readdir(settingsApp[key].folderPath, (err, files) => {
       if (err) {
@@ -75,7 +74,6 @@ function checkForNewFiles() {
                 filesRootPage = newArr;
                 return filesRootPage
               }else{
-                console.log('go');
                 parserFile(file, settingsApp[key]);
                 return filesRootPage
               }
@@ -92,10 +90,10 @@ function checkForNewFiles() {
     return filesRootPage
   })
   return filesRootPage
-
 }
 
 function parserFile(file, settings) {
+  console.log('go');
   const fileNameArr = file.replace(/[.()-,]/g, '_').toUpperCase().split('_');
       additionalSettings(fileNameArr, settings)
       let arrTag = fileNameArr.filter((item) => { return settings.listTag.indexOf(item) >= 0; });
@@ -130,28 +128,8 @@ function parserFile(file, settings) {
               });
               return filesRootPage
             }
-            
           });
           return filesRootPage
-          // try{
-          //   fs.copyFileSync(settings.folderPath + item, settings.dirList[tag] + item.replaceAll(' ', '_'));
-          //   console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`);
-          // }catch(err){
-          //   console.log('Ошибка копирования ' + err);
-          // }
-          
-          // , err => {
-          //   if (err) {
-          //     console.log('Ошибка копирования ' + err)
-          //   } else {
-          //     console.log(`Файл ${item} перемещён в ${settings.dirList[tag]}`);
-          //   }
-          // });
-          // fs.unlink(settings.folderPath + item, (err) => {
-          //   if (err) {
-          //     console.log('Ошибка удаления ' + err)
-          //   }
-          // });
         } else {
           fs.copyFile(settings.folderPath + file, settings.dirDefault + file.replaceAll(' ', '_'), err => {
             if (err) {
