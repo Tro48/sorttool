@@ -7,6 +7,7 @@ let dirFolder;
 let folderName = []
 let interevalId
 let filesRootPage = []
+let date = new Date();
 
 for (key in settingsApp) {
   folderName.push(key)
@@ -65,7 +66,7 @@ function checkForNewFiles() {
       } else if (files.length) {
         files.forEach((file)=>{
           if (!filesRootPage.includes(file)){
-            fs.readFile(settingsApp[key].folderPath + file, err => {
+            fs.readFile(settingsApp[key].folderPath + file,'binary', err => {
               if (err){
                 console.log('Файл ещё не загружен. ' + err);
                 let newArr = filesRootPage.filter((item) => {
@@ -93,7 +94,7 @@ function checkForNewFiles() {
 }
 
 function parserFile(file, settings) {
-  console.log('Начало копирования файла ' + file + '...');
+  console.log('Начало копирования файла ' + file + '... ' + date);
   const fileNameArr = file.replace(/[.()-,]/g, '_').toUpperCase().split('_');
       additionalSettings(fileNameArr, settings)
       let arrTag = fileNameArr.filter((item) => { return settings.listTag.indexOf(item) >= 0; });
@@ -111,7 +112,7 @@ function parserFile(file, settings) {
             if (err){
               console.log('Ошибка копирования ' + err);
             }else{
-              console.log(`Файл ${file} перемещён в ${settings.dirList[tag]}`);
+              console.log(`Файл ${file} перемещён в ${settings.dirList[tag]} ${date}`);
               fs.unlink(settings.folderPath + file, (err) => {
                 if (err) {
                   console.log('Ошибка удаления ' + err)
@@ -135,7 +136,7 @@ function parserFile(file, settings) {
             if (err) {
               console.log('Ошибка копирования в дефолтную папку ' + err)
             }else{
-              console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${file} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку.`);
+              console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${file} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку. ${date}`);
               fs.unlink(settings.folderPath + file, (err) => {
                 if (err) {
                   console.log('Ошибка удаления ' + err)
@@ -159,7 +160,7 @@ function parserFile(file, settings) {
           if (err) {
             console.log('Ошибка копирования в дефолтную папку ' + err)
           }else{
-            console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${file} перемещён в дефолтную папку ${settings.dirDefault}.`);
+            console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${file} перемещён в дефолтную папку ${settings.dirDefault}. ${date}`);
             fs.unlink(settings.folderPath + file, (err) => {
               if (err) {
                 console.log('Ошибка удаления ' + err)
