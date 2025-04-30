@@ -22,7 +22,16 @@ const buttonsId = ['#addNewFolderRoot', '#button_save_name', '#refreshLinkRootFo
   '#defaulTtagButton', '#openModalButton', '#inputNewTagButtonEsc', '#inputNewTagButtonSave',
   '#inputNewTagFolderButton', '#rootFolderDelete', '#buttonCancel', '#rootFolderSave', '#buttonOk', '#play', '#stop'];
 
-renderSettings(newSettingsFolder)
+renderSettings(newSettingsFolder);
+
+if (Object.keys(newSettingsFolder).length){
+  buttonPlay.children[0].textContent = 'pause_circle';
+  buttonPlay.disabled = true;
+  buttonPlay.classList.add('visually-hidden');
+  buttonStop.classList.remove('visually-hidden');
+  window.preload.playScript();
+}
+
 page.addEventListener('click', (evt) => {
   definesClickForButton(evt, pushForButton);
 })
@@ -105,10 +114,6 @@ function pushForButton(id, evt) {
     sectionParent.remove();
     tabsList.querySelector(`[href='#${sectionParent.id}']`).remove();
     window.preload.addNewJson(newSettingsFolder);
-  } else if (id === '#play') {
-    window.preload.playScript();
-  } else if (id === '#stop') {
-    window.preload.stopScript();
   }
   renderSettings(newSettingsFolder);
 }
@@ -244,11 +249,19 @@ function deleteItemTag(item){
 }
 
 buttonPlay.addEventListener('click', () => {
-  buttonPlay.children[0].textContent = 'pause_circle'
+  window.preload.playScript();
+  buttonPlay.children[0].textContent = 'pause_circle';
+  buttonPlay.disabled = true;
+  buttonPlay.classList.add('visually-hidden');
+  buttonStop.classList.remove('visually-hidden');
 })
 
 buttonStop.addEventListener('click', () => {
-  buttonPlay.children[0].textContent = 'play_circle_filled'
+  window.preload.stopScript();
+  buttonPlay.children[0].textContent = 'play_circle_filled';
+  buttonPlay.disabled = false;
+  buttonStop.classList.add('visually-hidden');
+  buttonPlay.classList.remove('visually-hidden');
 })
 
 buttonDownloadSettings.addEventListener('click', () =>{

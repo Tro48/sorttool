@@ -35,12 +35,12 @@ contextBridge.exposeInMainWorld('preload', {
     return settingsApp
   },
   playScript: () => {
-    console.log('start')
+    console.log('Скрипт запущен')
     interevalId = setInterval(checkForNewFiles, 3000)
   },
   stopScript: () => {
     clearInterval(interevalId)
-    console.log('stop')
+    console.log('Скрипт остановлен')
   },
   downloadSettings: () => {
     fs.readFileSync('settings.json', 'utf8', (err, data) => {
@@ -67,7 +67,7 @@ function checkForNewFiles() {
           if (!filesRootPage.includes(file)){
             fs.readFile(settingsApp[key].folderPath + file, err => {
               if (err){
-                console.log('Файл ещё не загружен');
+                console.log('Файл ещё не загружен. ' + err);
                 let newArr = filesRootPage.filter((item) => {
                   return item !== file
                 })
@@ -93,7 +93,7 @@ function checkForNewFiles() {
 }
 
 function parserFile(file, settings) {
-  console.log('go');
+  console.log('Начало копирования файла ' + file + '...');
   const fileNameArr = file.replace(/[.()-,]/g, '_').toUpperCase().split('_');
       additionalSettings(fileNameArr, settings)
       let arrTag = fileNameArr.filter((item) => { return settings.listTag.indexOf(item) >= 0; });
