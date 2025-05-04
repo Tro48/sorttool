@@ -1,6 +1,4 @@
 
-let newSettingsFolder = window.preload.readJson();
-// let newSettingsFolder
 let valuesInput = {};
 let interevalId
 const page = document.querySelector('.window');
@@ -22,19 +20,22 @@ const buttonsId = ['#addNewFolderRoot', '#button_save_name', '#refreshLinkRootFo
   '#defaulTtagButton', '#openModalButton', '#inputNewTagButtonEsc', '#inputNewTagButtonSave',
   '#inputNewTagFolderButton', '#rootFolderDelete', '#buttonCancel', '#rootFolderSave', '#buttonOk', '#play', '#stop'];
 
-renderSettings(newSettingsFolder);
-
-if (Object.keys(newSettingsFolder).length){
-  buttonPlay.children[0].textContent = 'pause_circle';
-  buttonPlay.disabled = true;
-  buttonPlay.classList.add('visually-hidden');
-  buttonStop.classList.remove('visually-hidden');
-  window.preload.playScript();
-}
+let newSettingsFolder
+initialApp()
 
 page.addEventListener('click', (evt) => {
   definesClickForButton(evt, pushForButton);
 })
+
+function prerenderControlButton(newSettingsFolder){
+  if (Object.keys(newSettingsFolder).length) {
+    buttonPlay.children[0].textContent = 'pause_circle';
+    buttonPlay.disabled = true;
+    buttonPlay.classList.add('visually-hidden');
+    buttonStop.classList.remove('visually-hidden');
+    window.preload.playScript();
+  }
+}
 
 function definesClickForButton(evt, func) {
   buttonsId.forEach(id => {
@@ -44,6 +45,21 @@ function definesClickForButton(evt, func) {
   })
 }
 
+async function initialApp(){
+  try{
+    newSettingsFolder = await window.preload.readJson();
+    renderSettings(newSettingsFolder);
+    prerenderControlButton(newSettingsFolder);
+    return newSettingsFolder
+  }catch(err){
+    await window.preload.newSettingsFile();
+    newSettingsFolder = await window.preload.readJson();
+    renderSettings(newSettingsFolder);
+    prerenderControlButton(newSettingsFolder);
+    return newSettingsFolder
+  }
+
+}
 function pushForButton(id, evt) {
   const sectionParent = evt.target.closest('.folder_settings_section_form');
   const inputForm = evt.target.closest(id).previousElementSibling;
@@ -133,6 +149,7 @@ function createNewRootFolder() {
     const newFolder = {
       [adresFolderId]: {
         folderPath: adresFolder[0] + "\\",
+        folderCache: adresFolder[0] + "\\cache\\",
         rootFolderName: adresFolderName,
         rootFolderId: adresFolderId,
         dirDefault: undefined,
@@ -145,11 +162,11 @@ function createNewRootFolder() {
         dirList: {},
       }
     }
-
     newSettingsFolder[adresFolderId] = newFolder[adresFolderId];
-
     tabsList.append(folderItemLink);
     folderSettingsSection.append(itemSettings);
+    window.preload.addNewJson(newSettingsFolder);
+    window.preload.checkForFiles(newSettingsFolder[adresFolderId].folderCache)
     return newSettingsFolder
   } else { console.log('no folder') }
 }
@@ -268,7 +285,7 @@ buttonDownloadSettings.addEventListener('click', () =>{
   tabsList.innerHTML = ''
   sectionFolderSettings.innerHTML = ''
   window.preload.downloadSettings();
-  let result = JSON.parse(window.preload.readNewJson())
+  let result = window.preload.readJson()
   newSettingsFolder = result
   renderSettings();
 
