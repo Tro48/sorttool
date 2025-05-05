@@ -1,6 +1,7 @@
 const fs = require('fs/promises');
 
-async function copyFile(file, settings) {
+async function copyFile(file, settings, filesRootPage) {
+    const date = new Date()
     const fileNameArr = file.replace(/[.()-,]/g, '_').toUpperCase().split('_');
     additionalSettings(fileNameArr, settings)
     let arrTag = fileNameArr.filter((item) => { return settings.listTag.indexOf(item) >= 0; });
@@ -17,7 +18,8 @@ async function copyFile(file, settings) {
             try{
                 await fs.copyFile(settings.folderCache + file, settings.dirList[tag] + file.replaceAll(' ', '_'));
                 await fs.unlink(settings.folderCache + file);
-                console.log(`Файл ${file} перемещён в ${settings.dirList[tag]}`);
+                console.log(`Файл ${file} перемещён в ${settings.dirList[tag]}`, date);
+                filesRootPage.delete(file);
             }catch(err){
                 console.log('Ошибка копирования ' + err);
             }
@@ -25,7 +27,8 @@ async function copyFile(file, settings) {
             try{
                 await fs.copyFile(settings.folderCache + file, settings.dirDefault + file.replaceAll(' ', '_'));
                 await fs.unlink(settings.folderCache + file);
-                console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${file} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку.`);
+                console.log(`ERROR: НЕ НАЙДЕНА ПАПКА С ИМЕНЕМ ${tag}! Файл ${file} перемещён в дефолтную папку ${settings.dirDefault}. Проверьте имя файла или создайте нужную папку.`, date);
+                filesRootPage.delete(file);
             } catch (err) {
                 console.log('Ошибка копирования в дефолтную папку ' + err)
             }
@@ -34,7 +37,8 @@ async function copyFile(file, settings) {
         try {
             await fs.copyFile(settings.folderCache + file, settings.dirDefault + file.replaceAll(' ', '_'));
             await fs.unlink(settings.folderCache + file);
-            console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${file} перемещён в дефолтную папку ${settings.dirDefault}.`);
+            console.log(`ERROR: НЕТ СОВПАДЕНИЙ! Файл ${file} перемещён в дефолтную папку ${settings.dirDefault}.`, date);
+            filesRootPage.delete(file);
         } catch (err) {
             console.log('Ошибка копирования в дефолтную папку ' + err)
         }
@@ -53,9 +57,10 @@ function additionalSettings(arr, settings) {
 }
 
 export async function preloadCopyFile(file, settings, filesRootPage){
-    const date = new Date()
-    await fs.unlink(settings.folderPath + file);
-    await copyFile(file, settings)
-    console.log('готово', date)
-    filesRootPage.delete(file);
+    try{
+        await fs.unlink(settings.folderPath + file);
+        await copyFile(file, settings, filesRootPage);
+    }catch(err){
+        console.log(err)
+    }
 }

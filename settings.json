@@ -9,6 +9,7 @@
     "deleteUndefinedFile": false,
     "defaultTagSwitch": true,
     "listTag": [],
-    "dirList": {}
+    "dirList": {},
+    "dirDefault": "D:\\other\\"
   }
 }

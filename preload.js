@@ -74,7 +74,8 @@ function checkForNewFiles() {
       } else if (files.length) {
         files.forEach((file)=>{
             filesRootPage.forEach((fileName)=>{
-              if (file !== fileName && file !== 'cache'){
+              if (file !== fileName && file !== 'cache' && fileName !== 'cache'){
+                console.log(fileName)
                 filesRootPage.add(file)
                 fs.copyFile(settingsApp[key].folderPath + file, settingsApp[key].folderCache + file.replaceAll(' ', '_'), err => {
                   if (err) {
