@@ -74,8 +74,7 @@ function checkForNewFiles() {
       } else if (files.length) {
         files.forEach((file)=>{
           if (file !== 'cache'){
-            filesRootPage.forEach((fileName) => {
-              if (fileName !== 'cache' && fileName !== file) {
+            if (!filesRootPage.has(file)) {
                   fs.copyFile(settingsApp[key].folderPath + file, settingsApp[key].folderCache + file.replaceAll(' ', '_'), err => {
                     if (err) {
                       console.log('Файл ещё не загружен...');
@@ -86,7 +85,6 @@ function checkForNewFiles() {
                     }
                   })
               }
-            })
           }
         })
       }
