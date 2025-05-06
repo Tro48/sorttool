@@ -2,16 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const { contextBridge, ipcRenderer, dialog } = require('electron');
 const { console } = require('inspector');
-const { preloadCopyFile } = require('./components/copyFile.mjs');
-let dirFolder;
+const { checkForNewFiles } = require('./components/checkForNewFiles.mjs')
 let interevalId
-let filesRootPage = new Set()
-filesRootPage.add('cash')
 
 contextBridge.exposeInMainWorld('preload', {
   addFolder: () => {
-    dirFolder = ipcRenderer.sendSync('click-button', "");
-    return dirFolder;
+    const dirFolder = ipcRenderer.sendSync('click-button', "");
+    return dirFolder
   },
   addNewJson: (item) => {
     newArr = item;
@@ -31,7 +28,7 @@ contextBridge.exposeInMainWorld('preload', {
   },
   playScript: () => {
     console.log('start')
-    interevalId = setInterval(checkForNewFiles, 2000)
+    interevalId = setInterval(checkForNewFiles, 1000)
   },
   stopScript: () => {
     clearInterval(interevalId)
@@ -50,44 +47,11 @@ contextBridge.exposeInMainWorld('preload', {
     let result = ipcRenderer.sendSync('click-upload', '');
     fs.writeFileSync(result, JSON.stringify(settings, null, 2));
   },
-  checkForFiles: (folderCache) => {
-    try{
-      fs.mkdirSync(folderCache);
-    }catch{
-      console.log('Папка cache уже создана')
-    }
-  }
+  // checkForFiles: (folderCache) => {
+  //   try{
+  //     fs.mkdirSync(folderCache);
+  //   }catch{
+  //     console.log('Папка cache уже создана')
+  //   }
+  // }
 });
-
-function checkForNewFiles() {
-  const settingsApp = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
-
-  let folderName = []
-  for (key in settingsApp) {
-    folderName.push(key)
-  }
-
-  folderName.forEach((key) => {
-    fs.readdir(settingsApp[key].folderPath, (err, files) => {
-      if (err) {
-        return console.error('Ошибка при чтении директории:', err);
-      } else if (files.length) {
-        files.forEach((file)=>{
-          if (file !== 'cache'){
-            if (!filesRootPage.has(file)) {
-                  fs.copyFile(settingsApp[key].folderPath + file, settingsApp[key].folderCache + file.replaceAll(' ', '_'), err => {
-                    if (err) {
-                      console.log('Файл ещё не загружен...');
-                    } else {
-                      filesRootPage.add(file);
-                      console.log('go');
-                      preloadCopyFile(file, settingsApp[key], filesRootPage);
-                    }
-                  })
-              }
-          }
-        })
-      }
-    })
-  })
-}

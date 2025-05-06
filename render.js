@@ -149,7 +149,7 @@ function createNewRootFolder() {
     const newFolder = {
       [adresFolderId]: {
         folderPath: adresFolder[0] + "\\",
-        folderCache: adresFolder[0] + "\\cache\\",
+        // folderCache: adresFolder[0] + "\\cache\\",
         rootFolderName: adresFolderName,
         rootFolderId: adresFolderId,
         dirDefault: undefined,
@@ -166,7 +166,7 @@ function createNewRootFolder() {
     tabsList.append(folderItemLink);
     folderSettingsSection.append(itemSettings);
     window.preload.addNewJson(newSettingsFolder);
-    window.preload.checkForFiles(newSettingsFolder[adresFolderId].folderCache)
+    // window.preload.checkForFiles(newSettingsFolder[adresFolderId].folderCache)
     return newSettingsFolder
   } else { console.log('no folder') }
 }
