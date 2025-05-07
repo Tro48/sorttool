@@ -16,7 +16,7 @@ export function checkForNewFiles() {
                         const copyFileParam = new GetCopyFileParam(file, settingsApp[key], filesNameCache);
                         const date = new Date();
                         console.log(copyFileParam.messageResult.copyFileError, date.toLocaleDateString(copyFileParam.optionsDate.lang, copyFileParam.optionsDate.options));
-                        copyFile(copyFileParam);
+                        setTimeout(() => { copyFile(copyFileParam) }, 2000);
                     }
                 })
             }
