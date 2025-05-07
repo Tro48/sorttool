@@ -18,7 +18,7 @@ export class GetCopyFileParam{
         const fileInfo = {
             searchResult: false,
         }
-        const fileNameArr = file.replace(/[.()-,]/g, '_').toUpperCase().split('_')
+        const fileNameArr = file.replace(/[.()\-,]/g, '_').toUpperCase().split('_')
         let arrTag = fileNameArr.filter((item) => { return settings.listTag.indexOf(item) >= 0; })
         let tag
         if (arrTag.length === 1) {
