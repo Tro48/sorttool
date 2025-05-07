@@ -28,7 +28,7 @@ contextBridge.exposeInMainWorld('preload', {
   },
   playScript: () => {
     console.log('start')
-    interevalId = setInterval(checkForNewFiles, 1000)
+    interevalId = setInterval(checkForNewFiles, 2000)
   },
   stopScript: () => {
     clearInterval(interevalId)
