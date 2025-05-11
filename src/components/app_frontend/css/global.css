@@ -12,6 +12,7 @@
 }
 
 body {
+    background-color: #3C3C3C;
     margin: 0;
     block-size: 100%;
 }
@@ -40,6 +41,7 @@ input {
     color: currentColor;
     font-family: inherit;
     font-size: inherit;
+    border: none;
 }
 
 ul,

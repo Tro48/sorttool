@@ -1,0 +1,13 @@
+@import './settings-tag_button.css';
+@import './tag-container/tag-container.css';
+
+.settings-tag-folder{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    inline-size: 100%;
+    block-size: 100%;
+    border: 1px solid black;
+    border-radius: 5px;
+}

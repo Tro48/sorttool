@@ -1,0 +1,16 @@
+@import './all-settings-container/all-settings-container.css';
+
+.tabs-item_content{
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    inline-size: 100%;
+    block-size: 100%;
+    padding: 5px;
+    background-color: #3C3C3C;
+}
+
+.tabs-item_content:target {
+    display: flex;
+    background-color: #333333
+}

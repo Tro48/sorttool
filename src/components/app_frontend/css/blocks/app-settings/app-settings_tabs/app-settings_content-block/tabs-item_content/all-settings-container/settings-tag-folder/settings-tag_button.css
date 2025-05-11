@@ -1,0 +1,9 @@
+.settings-tag_button{
+    min-inline-size: 100%;
+    border-radius: 5px !important;
+    left: 50%;
+}
+
+.settings-tag_button:active {
+    scale: 0.99 !important;
+}

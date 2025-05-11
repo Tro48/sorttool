@@ -1,0 +1,17 @@
+.root-folder-title{
+    grid-area: h;
+    text-transform: uppercase;
+}
+
+.root-folder-url{
+    grid-area: p;
+}
+
+.root-folder-button{
+    grid-area: b;
+    justify-self: end;
+    inline-size: 80px;
+    block-size: 28px;
+    border-radius: 5px !important;
+    margin-right: 5px;
+}

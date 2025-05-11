@@ -1,0 +1,9 @@
+@import './app-settings_add-folder-button/app-settings_add-folder-button.css';
+
+.app-settings_add-folder-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-block-size: 90px;
+    border-bottom: 1px solid black;
+}

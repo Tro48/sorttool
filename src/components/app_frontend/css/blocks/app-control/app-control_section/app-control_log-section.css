@@ -1,0 +1,19 @@
+@import './app-control_log-message/app-control_log-message.css';
+
+.app-control_log-section{
+    display: flex;
+    block-size: 700px;
+    inline-size: 100%;
+    overflow: auto;
+    flex-direction: column;
+    gap: 5px;
+    padding-inline: 20px 10px;
+    padding-block: 20px;
+    margin: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(113, 113, 113) #3C3C3C;
+}
+
+.settings-active .app-control_log-section{
+    display: none;
+}

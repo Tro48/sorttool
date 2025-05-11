@@ -1,0 +1,13 @@
+@import './tag-item/tag-item.css';
+
+.tag-container{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    inline-size: 100%;
+    block-size: 360px;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgb(113, 113, 113) #3C3C3C;
+}

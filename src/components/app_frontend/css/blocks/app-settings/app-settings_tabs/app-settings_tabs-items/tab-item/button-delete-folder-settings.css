@@ -1,0 +1,24 @@
+.button-delete-folder-settings.close-button{
+    position: absolute ;
+    top: 0;
+    right: 0;
+    background-color: transparent ;
+    box-shadow: none ;
+    opacity: 1 ;
+    transition: 0.5s;
+}
+
+.button-delete-folder-settings.close-button:hover{
+    background-color: transparent;
+}
+
+.button-delete-folder-settings.close-button::before,
+.button-delete-folder-settings.close-button::after {
+    transition: 0.5s;
+}
+
+.button-delete-folder-settings:hover.close-button::before,
+.button-delete-folder-settings:hover.close-button::after {
+    background-color: #1b1b1b;
+    transition: 0.5s;
+}

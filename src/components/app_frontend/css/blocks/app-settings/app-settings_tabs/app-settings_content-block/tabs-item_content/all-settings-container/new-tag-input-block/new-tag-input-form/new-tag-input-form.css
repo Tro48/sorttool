@@ -1,0 +1,109 @@
+.new-tag-input-form{
+    display: grid;
+    grid-template-columns: 40% 50% 10%;
+    gap: 5px;
+    padding: 10px;
+    inline-size: 100%;
+    background-color: #3C3C3C;
+    border-radius: 3px;
+}
+
+.input-tag-label{
+    display: flex;
+    inline-size: 100%;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-around;
+    text-transform: uppercase;
+    padding-right: 5px;
+}
+
+.input-tag-label:first-child{
+    border-right: 1px solid black;
+}
+
+.input-type-text{
+    background-color: #333333;
+    inline-size: 100%;
+    border-radius: 5px;
+    min-block-size: 28px;
+    padding: 5px;
+    font-weight: normal;
+    transition: background-color 0.5s;
+    border: 1px solid transparent;
+}
+
+.input-type-text:focus-visible{
+    border-color: black;
+}
+
+.input-type-text::placeholder {
+    padding: 5px;
+    text-transform: uppercase;
+    color: #595959;
+    transition: color 0.5s;
+}
+
+.input-type-text:hover::placeholder {
+    color: #1c1c1c;
+    transition: color 0.5s;
+}
+
+.input-type-text:hover {
+    background-color: #393939;
+    transition: background-color 0.5s;
+}
+
+.button-input-tag-folder{
+    min-inline-size: fit-content;
+    border-radius: 5px !important;
+    opacity: 0.2;
+    transition: opacity ease 0.5s;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.add-tag-button-submit{
+    justify-self: end;
+    margin: 5px 20px 5px 5px;
+    opacity: 0.2;
+    transition: opacity ease 0.5s;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+@media (width <= 1180px) {
+    .new-tag-input-form{
+        grid-template-columns: 40% 60%;
+        row-gap: 5px;
+    }
+    .button-input-tag-folder {
+        margin-right: 5px;
+    }
+
+    .add-tag-button-submit {
+        grid-column: 2;
+    }
+}
+
+@media (width <= 930px){
+    .new-tag-input-form{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .input-tag-label:first-child {
+        border-right: none;  
+        }
+}
+
+@media (width <= 650px){
+    .input-tag-label{
+        flex-direction: column;
+        align-items: start;
+    }
+}

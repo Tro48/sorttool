@@ -1,0 +1,16 @@
+@import './settings-folder/settings-folder.css';
+@import './settings-tag-folder/settings-tag-folder.css';
+@import './new-tag-input-block/new-tag-input-block.css';
+
+.all-settings-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    block-size: 100%;
+    margin: 15px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #333333;
+}

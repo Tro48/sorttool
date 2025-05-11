@@ -54,16 +54,16 @@ export class GetCopyFileParam{
         this.dirDefault = settings.dirDefault
         this.searchResult = this.#calc(settings, file).searchResult
         this.messageResult = {
-            copyFileOk: `Файл ${this.file} перемещён в ${this.newDir}`,
-            copyFileOther: `ERROR: Файл ${this.file} перемещён в дефолтную папку ${this.dirDefault}. Проверьте имя файла или создайте нужную папку.`,
-            copyFileDefaultFolder: `ERROR: НЕТ СОВПАДЕНИЙ! Файл ${this.file} перемещён в дефолтную папку ${this.dirDefault}.`,
-            copyFileError: `Ожидание файла ${this.file} ...` ,
-            noDirdefault: `Нет папки для неизвестных файлов. ${this.file} удалён!`
+            copyFileOk: `Файл ${this.file} перемещён в ${this.newDir} `,
+            copyFileOther: `ERROR: Файл ${this.file} перемещён в дефолтную папку ${this.dirDefault}. Проверьте имя файла или создайте нужную папку. `,
+            copyFileDefaultFolder: `ERROR: НЕТ СОВПАДЕНИЙ! Файл ${this.file} перемещён в дефолтную папку ${this.dirDefault}. `,
+            copyFileError: `Ожидание файла ${this.file} ... ` ,
+            noDirdefault: `Нет папки для неизвестных файлов. ${this.file} удалён! `
         }
     }
 }
 
-export async function copyFile(param) {
+export async function copyFile(param, paramMessage) {
     const newParam = param;
     if (newParam.settings.dirList[newParam.searchResult]) {
         if (newParam.newDir) {
@@ -72,9 +72,10 @@ export async function copyFile(param) {
                 await fs.unlink(newParam.oldDir);
                 newParam.cache.delete(newParam.file);
                 const date = new Date();
-                console.log(newParam.messageResult.copyFileOk, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options));
+                paramMessage.addLogMessage((newParam.messageResult.copyFileOk, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options)), paramMessage.messageColor.ok);
             }catch(err){
-                setTimeout(() => { copyFile(newParam) }, 2000);
+                console.error(err);
+                setTimeout(() => { copyFile(newParam, paramMessage) }, 2000);
             }
         } else {
             try{
@@ -83,15 +84,16 @@ export async function copyFile(param) {
                     await fs.unlink(newParam.oldDir);
                     newParam.cache.delete(newParam.file);
                     const date = new Date();
-                    console.log(newParam.messageResult.copyFileOther, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options));
+                    paramMessage.addLogMessage((newParam.messageResult.copyFileOther, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options)), paramMessage.messageColor.notification);
                 } else {
                     await fs.unlink(newParam.oldDir);
                     newParam.cache.delete(newParam.file);
-                    console.log(newParam.messageResult.noDirdefault);
+                    paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
                 }
             } catch (err) {
-                console.log(newParam.messageResult.copyFileError, err);
-                setTimeout(() => { copyFile(newParam) }, 2000);
+                console.error(err);
+                paramMessage.addLogMessage(newParam.messageResult.copyFileError, paramMessage.messageColor.notification)
+                setTimeout(() => { copyFile(newParam, paramMessage) }, 2000);
             }
         }
     } else {
@@ -100,17 +102,18 @@ export async function copyFile(param) {
                 await fs.copyFile(newParam.oldDir, newParam.dirDefault);
                 await fs.unlink(newParam.oldDir);
                 newParam.cache.delete(newParam.file);
-                console.log(newParam.messageResult.copyFileDefaultFolder, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options));
+                paramMessage.addLogMessage((newParam.messageResult.copyFileDefaultFolder, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options)), paramMessage.messageColor.notification);
             }else{
                 await fs.unlink(newParam.oldDir);
                 newParam.cache.delete(newParam.file);
-                console.log(newParam.messageResult.noDirdefault);
+                paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
             }
             
         } catch (err) {
             await fs.unlink(newParam.oldDir);
             newParam.cache.delete(newParam.file);
-            console.log(newParam.messageResult.copyFileError, err);
+            console.error(err);
+            paramMessage.addLogMessage(newParam.messageResult.copyFileError, paramMessage.messageColor.error);
         }
     }
 }

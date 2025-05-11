@@ -1,0 +1,9 @@
+@import './app-settings_tabs-items/app-settings_tabs-items.css';
+@import './app-settings_content-block/app-settings_content-block.css';
+
+.app-settings_tabs{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

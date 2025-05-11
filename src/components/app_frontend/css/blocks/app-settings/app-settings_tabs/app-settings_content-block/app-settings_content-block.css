@@ -1,0 +1,7 @@
+@import './tabs-item_content/tabs-item_content.css';
+
+
+.app-settings_content-block{
+    inline-size: 100%;
+    block-size: 100%;
+}

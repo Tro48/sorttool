@@ -1,0 +1,6 @@
+.app-control_button-section{
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin: 50px;
+}

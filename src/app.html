@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./components/app_frontend/css/global.css" />
+    <link rel="stylesheet" href="./components/app_frontend/css/variables.css" />
+    <link rel="stylesheet" href="./components/app_frontend/css/styleapp.css" />
+    <title>SortTool</title>
+  </head>
+  <body class="window">
+    <main class="main settings-active">
+      <section class="app-control">
+        <button type="button" class="button app-control_button-settings">
+          <span>settings</span>
+        </button>
+        <div class="app-control_button-section">
+          <button type="button" class="button app-control_play">
+            <div class="play-button-icon"></div>
+          </button>
+        </div>
+        <ul class="app-control_log-section"></ul>
+      </section>
+      <section class="app-settings">
+        <div class="app-settings_add-folder-section">
+          <button
+            type="button"
+            class="button add-button app-settings_add-folder-button"
+          ></button>
+        </div>
+        <div class="app-settings_tabs">
+          <nav class="app-settings_tabs-items"></nav>
+        </div>
+        <div class="app-settings_content-block"></div>
+      </section>
+    </main>
+    <template class="log-message">
+      <li class="app-control_log-message_block">
+        <p class="log-message"></p>
+      </li>
+    </template>
+    <template class="tab-items">
+      <a href="" class="tab-item">
+        <button type="button" class="button close-button button-delete-folder-settings"></button>
+        <input class="name-folder-input" type="text">
+        <span class="tab-item-text"></span></a>
+    </template>
+    <template class="content-settings-item">
+      <div id="" class="tabs-item_content">
+        <div class="all-settings-container">
+          <div class="settings-folder">
+            <div class="settings-folder_item">
+              <h4 class="root-folder-title">Расположение папки:</h4>
+              <p class="root-folder-url"></p>
+              <button
+                type="button"
+                class="button root-folder-button add-button update-folder-button"
+              >
+              </button>
+            </div>
+            <div class="settings-folder_item">
+              <h4 class="root-folder-title">Папка для неизвестных файлов:</h4>
+              <p class="default-folder-url"></p>
+              <button
+                type="button"
+                class="button root-folder-button add-button add_default-folder"
+              >
+              </button>
+            </div>
+          </div>
+          <div class="new-tag-input-block">
+            <form class="new-tag-input-form">
+              <label class="input-tag-label"
+                >Укажите тег:
+                <input required name="folderTag"
+                  class="input-tag input-type-text"
+                  type="text"
+                  placeholder="MP3, WAW, ACC"
+              /></label>
+              <label class="input-tag-label"
+                >Добавьте папку:
+                <input required name="folderDir"
+                  class="input-folder-adres input-type-text"
+                  type="text"
+                  placeholder="C:\имя_папки"
+                /><button type="button" class="button button-input-tag-folder">
+                  Добавить папку
+                </button></label
+              >
+              <button type="submit" class="button add-button add-tag-button-submit">
+                
+              </button>
+            </form>
+          </div>
+          <div class="settings-tag-folder">
+            <div class="tag-container"></div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <template class="tag-item_template">
+      <div class="tag-item">
+        <h3 class="tag-item_tag-title">
+          Тег: <span class="tag-item_content tag-item_tag-content"></span>
+        </h3>
+        <h3 class="tag-item_dir-folder-title">
+          Папка:
+          <span class="tag-item_content tag-item_dir-folder-content"></span>
+        </h3>
+        <button
+          type="button"
+          class="button close-button tag-item_button-delete"
+        ></button>
+      </div>
+    </template>
+    <script src="./interface.js"></script>
+  </body>
+</html>

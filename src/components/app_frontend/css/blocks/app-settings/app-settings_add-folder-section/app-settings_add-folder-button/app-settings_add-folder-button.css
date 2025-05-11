@@ -1,0 +1,7 @@
+.app-settings_add-folder-button{
+    font-size: 40px;
+    color: #3C3C3C;;
+    min-inline-size: 60px !important;
+    min-block-size: 60px !important;
+    border-radius: 50% !important;
+}

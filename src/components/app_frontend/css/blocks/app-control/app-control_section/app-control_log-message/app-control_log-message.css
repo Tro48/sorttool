@@ -1,0 +1,22 @@
+.app-control_log-message_block{
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    min-inline-size: 100%;
+    min-block-size: fit-content;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #333333;
+}
+
+.message-error{
+    color: #FF3D00;
+}
+
+.message-ok{
+    color: #1ede00;
+}
+
+.message-notification{
+    color: white;
+}

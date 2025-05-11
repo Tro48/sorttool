@@ -1,0 +1,8 @@
+@import './tab-item/tab-item.css';
+@import './tab-item/button-delete-folder-settings.css';
+
+.app-settings_tabs-items{
+    display: flex;
+    justify-content: space-around;
+    inline-size: 100%;
+}

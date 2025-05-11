@@ -1,9 +1,9 @@
-const { copyFile, GetCopyFileParam } = require('./components/copyFile.mjs');
+const { copyFile, GetCopyFileParam } = require('./components/app_backend/copyFile.mjs');
 const fs = require('fs');
 const filesNameCache = new Set();
 
-export function checkForNewFiles() {
-    const settingsApp = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
+export function checkForNewFiles(param) {
+    const settingsApp = JSON.parse(fs.readFileSync(param.settingsFile, 'utf8'));
     const folderName = Object.keys(settingsApp);
     folderName.forEach((key) => {
         fs.readdir(settingsApp[key].folderPath, (err, files) => {
@@ -15,8 +15,9 @@ export function checkForNewFiles() {
                         filesNameCache.add(file);
                         const copyFileParam = new GetCopyFileParam(file, settingsApp[key], filesNameCache);
                         const date = new Date();
-                        console.log(copyFileParam.messageResult.copyFileError, date.toLocaleDateString(copyFileParam.optionsDate.lang, copyFileParam.optionsDate.options));
-                        setTimeout(() => { copyFile(copyFileParam) }, 2000);
+                        const message = copyFileParam.messageResult.copyFileError + date.toLocaleDateString(copyFileParam.optionsDate.lang, copyFileParam.optionsDate.options);
+                        param.addLogMessage(message, param.messageColor.notification);
+                        setTimeout(() => { copyFile(copyFileParam, param) }, 2000);
                     }
                 })
             }

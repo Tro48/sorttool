@@ -29,9 +29,9 @@ ipcMain.on('click-upload', (event, arg) => {
 const createWindow = () => {
   
   win = new BrowserWindow({
-    icon: __dirname + "/app_icon.png",
+    icon: __dirname + "/components/app_frontend/img/app_icon.png",
     width: 1000,
-    height: 800,
+    height: 1000,
     autoHideMenuBar: true,
     webPreferences: {
         nodeIntegration: true,
@@ -40,12 +40,12 @@ const createWindow = () => {
   });
 
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
+    pathname: path.join(__dirname, 'app.html'),
     protocol: 'file:',
     slashes: true,
   }));
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null

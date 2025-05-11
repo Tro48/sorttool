@@ -1,0 +1,21 @@
+@import './blocks/app-control/_app-control.css';
+@import './blocks/app-settings/app-settings.css';
+@import './blocks/button/buttons.css';
+
+.main{
+    display: grid;
+    grid-template-columns: 100% 0;
+    margin: 10px;
+    max-block-size: 97vh;
+    overflow-y: visible;
+    overflow-x: clip;
+    background-color: #3C3C3C;
+    border: 1px solid black;
+    border-radius: 5px;
+    transition: grid-template-columns 1s;
+}
+
+.settings-active{
+    grid-template-columns: 10% 90%;
+    transition: grid-template-columns 1s;
+}

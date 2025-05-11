@@ -1,0 +1,86 @@
+.tab-item{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    block-size: 100%;
+    text-transform: uppercase;
+    padding: 5px;
+    background-color: #3C3C3C;
+    border-bottom: 1px solid black;
+    transition: background-color 0.5s;
+}
+
+.tab-item:not(:first-child){
+    border-left: 1px solid black;
+}
+
+
+.name-folder-input{
+    display: none;
+    background-color: transparent !important;
+    border: none;
+    text-transform: uppercase;
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+.name-folder-input-active {
+    display: flex;
+    text-align: center;
+}
+
+.tab-item-text{
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    cursor: url(../../../../../../img/pencil.png) 10 10, default;
+}
+
+.tab-item-text:hover {
+    background-color: #3a3a3a;
+}
+
+.tab-item-text:hover + .tooltip {
+    opacity: 1;
+    transition: opacity 0.5s ease-out 0.5s;
+}
+
+.tooltip{
+    position: absolute;
+    display: block;
+    text-align: center;
+    bottom: -65%;
+    left: 0;
+    inline-size: inherit;
+    font-size: 10px;
+    background-color: #454545;
+    padding: 3px;
+    border-radius: 5px;
+    color: rgb(27, 27, 27);
+    opacity: 0;
+    transition: opacity 0.5s ease-out 0.5s;
+}
+
+.tab-item-text-disable{
+    display: none;
+}
+
+.tab-item:hover{
+    background-color: #333333;
+    transition: background-color 0.5s;
+}
+
+.tab-item-active{
+    background-color: #333333;
+    border-bottom: none;
+}
+
+
+@media (width <= 730px){
+    .tooltip{
+        bottom: -100%;
+    }
+}

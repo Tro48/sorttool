@@ -1,0 +1,21 @@
+@import './app-settings_add-folder-section/app-settings_add-folder-section.css';
+@import './app-settings_tabs/app-settings_tabs.css';
+
+
+.app-settings{
+    display: flex;
+    flex-direction: column;
+    block-size: 97vh;
+    overflow: hidden;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-radius: 5px;
+    background-color: #333333;
+    /* opacity: 0; */
+    transition: 1s;
+}
+
+/* .settings-active .app-settings{
+    opacity: 1;
+    transition: 1s;
+} */

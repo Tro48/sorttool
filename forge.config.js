@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: 'ico',
+    icon: 'src/ico'
   },
   rebuildConfig: {},
   makers: [

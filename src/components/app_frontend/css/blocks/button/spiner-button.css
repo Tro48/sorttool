@@ -1,0 +1,31 @@
+.spiner-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.spiner-button:before,
+.spiner-button:after {
+    content: '';
+    border-radius: 50%;
+    position: absolute;
+    inset: 0;
+}
+
+.spiner-button:after {
+    box-shadow: 0 2px 0 #FF3D00 inset;
+    animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+
+    0% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    } }
+
+    

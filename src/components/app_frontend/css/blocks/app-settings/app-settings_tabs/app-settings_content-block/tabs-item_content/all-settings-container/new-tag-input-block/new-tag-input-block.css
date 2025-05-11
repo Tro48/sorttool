@@ -1,0 +1,7 @@
+@import './new-tag-input-form/new-tag-input-form.css';
+
+.new-tag-input-block{
+    display: flex;
+    inline-size: 100%;
+    padding: 5px;
+}

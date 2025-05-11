@@ -1,0 +1,168 @@
+@import './spiner-button.css';
+
+.button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    max-inline-size: 100px;
+    max-block-size: 100px;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(113, 113, 113);
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    box-shadow: 0 0 15px 5px rgba(60, 60, 60, 0.3)inset;
+}
+
+.app-control_play{
+    inline-size: 80px;
+    block-size: 80px;
+    transition: 0.5s;
+}
+
+.button:hover {
+    background-color: rgb(122, 122, 122);
+    transition: 0.3s;
+}
+
+.button:active{
+    scale: 0.9;
+}
+
+.app-control_button-settings{
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-inline-size: fit-content;
+    max-block-size: fit-content;
+    border-radius: 5px;
+    background-color: #333333;
+}
+.app-control_button-settings span {
+    padding: 2px;
+    text-transform: uppercase;
+    writing-mode: vertical-lr;
+    transform: rotate(180deg);
+    transition: 0.5s;
+}
+
+.settings-active .app-control_button-settings{
+    min-inline-size: 35px;
+    min-block-size: 35px;
+    right: -35px;
+    background-color: #3C3C3C;
+    border-right: 1px solid black;
+    border-radius: 0;
+    inline-size: 100%;
+    overflow: visible;
+    transition: 0.5s;
+}
+
+.settings-active .app-control_button-settings:hover {
+    background-color: #333333;
+}
+
+.settings-active .app-control_button-settings span {
+    transform: rotate(0deg);
+    transition: 0.5s;
+}
+
+.button-none{
+    display: none;
+}
+
+.button-disabled{
+
+}
+
+.play-button-icon{
+    margin-left: 10px;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: 40px solid #1ede00;
+    transition: 0.5s;
+}
+
+.button:hover .play-button-icon{
+    border-left-color: #159e00;
+    transition: border-left-color 0.3s;
+}
+
+.stop-button-icon{
+    transform-origin: center;
+    inline-size: 40px;
+    block-size: 40px;
+    background-color: #FF3D00;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+.button:hover .stop-button-icon{
+    background-color: #c52e00;
+    transition: background-color 0.3s;
+}
+
+.settings-active .app-control_play {
+    max-inline-size: 35px;
+    max-block-size: 35px;
+    transition: 0.5s;
+}
+
+.settings-active .play-button-icon {
+    margin-left: 5px;
+    border-top-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 15px; 
+    transition: 0.5s;
+}
+
+.settings-active .stop-button-icon {
+    inline-size: 15px;
+    block-size: 15px;
+    border-radius: 3px;
+    transition: 0.5s;
+}
+
+.close-button,
+.add-button {
+    min-inline-size: 80px;
+    block-size: 28px;
+    border-radius: 5px;
+    position: relative;
+    opacity: 0.2;
+    transition: opacity ease 0.5s;
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.close-button{
+    min-inline-size: 28px;
+    block-size: 28px;
+}
+
+.close-button::before,
+.close-button::after,
+.add-button::before,
+.add-button::after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    display: block;
+    inline-size: 15px;
+    block-size: 2px;
+    background-color: #292929;
+}
+
+.close-button::before {
+    transform: rotate(45deg);
+}
+
+.close-button::after {
+    transform: rotate(-45deg);
+}
+
+.add-button::after{
+    transform: rotate(90deg);
+}
