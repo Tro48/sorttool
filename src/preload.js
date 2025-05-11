@@ -6,10 +6,10 @@ const { checkForNewFiles } = require('./components/app_backend/checkForNewFiles.
 const { SettingsApi } = require('./components/app_backend/settingsApi.mjs');
 const { NewRootFolder } = require('./components/app_backend/newRootFolder.mjs');
 const { AddFolder } = require('./components/app_backend/addFolder.mjs');
-const { addNewTag } =require('./components/app_backend/addNewTag.mjs');
+const { addNewTag } = require('./components/app_backend/addNewTag.mjs');
 let interevalId;
-const settingsFile = path.join(__dirname, 'settings.json');
-
+// const settingsFile = path.join(__dirname, 'settings.json');
+const settingsFile = './resources/settings.json';
 contextBridge.exposeInMainWorld('preload', {
   frontConfig: ()=> {
     return frontConfig
