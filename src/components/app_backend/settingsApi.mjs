@@ -4,9 +4,11 @@ const path = require('path');
 export class SettingsApi{
 
     #settingsFile
+    #settingsTemplate
 
-    constructor(settingsFile){
+    constructor(settingsFile, settingsTemplate){
         this.#settingsFile = settingsFile
+        this.#settingsTemplate = settingsTemplate
     }
 
     getSettings(){
@@ -16,7 +18,7 @@ export class SettingsApi{
                       const settings = JSON.parse(fs.readFileSync(this.#settingsFile, 'utf8'))
                       resolve(settings)
                   }catch{
-                      fs.writeFile(this.#settingsFile, JSON.stringify({}), (err) => {
+                      fs.writeFile(this.#settingsFile, JSON.stringify(this.#settingsTemplate), (err) => {
                           if (err) {
                               console.log(err)
                           } else {

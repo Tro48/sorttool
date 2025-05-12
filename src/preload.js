@@ -8,7 +8,7 @@ const { NewRootFolder } = require('./components/app_backend/newRootFolder.mjs');
 const { AddFolder } = require('./components/app_backend/addFolder.mjs');
 const { addNewTag } = require('./components/app_backend/addNewTag.mjs');
 let interevalId;
-// const settingsFile = path.join(__dirname, 'settings.json');
+
 const settingsFile = './resources/settings.json';
 contextBridge.exposeInMainWorld('preload', {
   frontConfig: ()=> {
@@ -16,13 +16,13 @@ contextBridge.exposeInMainWorld('preload', {
   },
   addFolder: (data, renderSettings) => {
     const dirFolder = ipcRenderer.sendSync('click-button', "");
-    const settingsApp = new SettingsApi(settingsFile);
+    const settingsApp = new SettingsApi(settingsFile, {});
     const addRootFolder = new AddFolder({ dirFolder, settingsApp, NewRootFolder, renderSettings, data });
     return addRootFolder.addFolder();
   },
   addRootFolder: (renderSettings) => {
     const dirFolder = ipcRenderer.sendSync('click-button', "");
-    const settingsApp = new SettingsApi(settingsFile);
+    const settingsApp = new SettingsApi(settingsFile, {});
     const addRootFolder = new AddFolder({ dirFolder, settingsApp, NewRootFolder, renderSettings });
     return addRootFolder.addRootFolder();
   },
@@ -37,8 +37,8 @@ contextBridge.exposeInMainWorld('preload', {
     clearInterval(interevalId);
     addLogMessage('stop', messageColor.error)
   },
-  getSettings: () => {
-    const settingsApi = new SettingsApi(settingsFile);
+  getSettings: (settingsFile, settingsTemplate) => {
+    const settingsApi = new SettingsApi(settingsFile, settingsTemplate);
     const getSettings = settingsApi.getSettings();
     return getSettings;
   },

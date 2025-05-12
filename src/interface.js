@@ -13,19 +13,42 @@ const buttonPlay = main.querySelector(config.dot + config.pageClasses.buttonPlay
 const buttonSettings = main.querySelector(config.dot + config.pageClasses.settingsActiveButton);
 const buttonContent = buttonPlay.children;
 const buttonSettingsText = buttonSettings.children;
+const settingsFile = './resources/settings.json';
+const globalSettings = './resources/globalSettings.json';
+const globalSettingsTemplate = {
+    autoRunScript: false,
+    startWithTheSystem: false,
+    tray: false
+};
 const data = { folderKey: undefined, folderId: undefined };
 
 const initialApp = () => {
-    const getSettingsApp = window.preload.getSettings();
-    getSettingsApp.then((res)=>{
-        const settingsKeys = Object.keys(res);
-        if(settingsKeys.length){
-            renderSettings(res);
-            settingsKeys.forEach((rootFolderId)=>{
-                renderTagItem(res, rootFolderId);
+    const getSettingsScript = window.preload.getSettings(settingsFile, {});
+    const getSettingsApp = window.preload.getSettings(globalSettings, globalSettingsTemplate);
+    Promise.all([getSettingsScript, getSettingsApp])
+        .then(([settingsScript, settingsApp]) => {
+        const settingsKeys = Object.keys(settingsScript);
+        if (settingsKeys.length && settingsApp.autoRunScript){
+            renderSettings(settingsScript);
+            settingsKeys.forEach((rootFolderId) => {
+                renderTagItem(settingsScript, rootFolderId);
             })
             document.location.href = document.querySelector('#n1').getAttribute('href');
             tabsSection.children[0].classList.add(config.activeClasses.tabActive);
+            activeScriptButton();
+        } else if (settingsKeys.length){
+            renderSettings(settingsScript);
+            settingsKeys.forEach((rootFolderId) => {
+                renderTagItem(settingsScript, rootFolderId);
+            })
+            document.location.href = document.querySelector('#n1').getAttribute('href');
+            tabsSection.children[0].classList.add(config.activeClasses.tabActive);
+        }
+    })
+    getSettingsScript.then((res)=>{
+        const settingsKeys = Object.keys(res);
+        if(settingsKeys.length){
+            
         }
     })
 }
@@ -163,7 +186,7 @@ function openModalDelete(evt){
 
 function deleteFolder(folderItem){
     const folderId = folderItem.getAttribute('href').slice(1);
-    const getSettings = window.preload.getSettings();
+    const getSettings = window.preload.getSettings(settingsFile);
     getSettings.then((settings)=>{
         delete settings[folderId];
         const setSettings = window.preload.setSettings(settings);
@@ -195,7 +218,7 @@ function editFolderName(tabItemText, inputNameFolder){
 }
 
 function saveFolderName(evt, tabItemText, inputNameFolder, abortController){
-    const getSettings = window.preload.getSettings();
+    const getSettings = window.preload.getSettings(settingsFile, {});
     const folderId = tabItemText.closest('.tab-item').getAttribute('href').slice(1);
     if (evt.key === 'Enter' || !document.querySelector(':focus')) {
         getSettings.then((settings)=>{
@@ -228,7 +251,7 @@ function renderTagItem(settings, rootFolderId){
 }
 
 function deleteTagItem(evt){
-    const getSettings = window.preload.getSettings();
+    const getSettings = window.preload.getSettings(settingsFile, {});
     const itemElement = evt.target.closest(config.dot + config.pageClasses.tagItem);
     const rootFolderId = itemElement.closest(config.dot + config.pageClasses.tabItemContent).id;
     let itemId = itemElement.id;

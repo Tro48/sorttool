@@ -1,5 +1,5 @@
 export const addNewTag = ({ submitData, rootFolderId, renderTagItem, SettingsApi, settingsFile }) => {
-    const settingsApi = new SettingsApi(settingsFile);
+    const settingsApi = new SettingsApi(settingsFile, {});
     const newTag = submitData[0].value;
     const newDir = submitData[1].value;
     settingsApi.getSettings().then((settings) => {
