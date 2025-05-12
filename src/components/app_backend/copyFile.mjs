@@ -81,7 +81,7 @@ export async function copyFile(param, paramMessage) {
         } else {
             try{
                 if (newParam.dirDefault) {
-                    await fs.copyFile(newParam.oldDir, newParam.dirDefault);
+                    await fs.copyFile(newParam.oldDir, newParam.dirDefault + newParam.file.replaceAll(' ', '_'));
                     await fs.unlink(newParam.oldDir);
                     newParam.cache.delete(newParam.file);
                     const date = new Date();
@@ -100,10 +100,12 @@ export async function copyFile(param, paramMessage) {
     } else {
         try {
             if (newParam.dirDefault){
-                await fs.copyFile(newParam.oldDir, newParam.dirDefault);
-                await fs.unlink(newParam.oldDir);
+                await fs.copyFile(newParam.oldDir, newParam.dirDefault + newParam.file.replaceAll(' ', '_'));
+                await fs.unlink(newParam.oldDir)
                 newParam.cache.delete(newParam.file);
-                paramMessage.addLogMessage((newParam.messageResult.copyFileDefaultFolder, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options)), paramMessage.messageColor.notification);
+                const date = new Date();
+                const messageResult = newParam.messageResult.copyFileDefaultFolder + date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options);
+                paramMessage.addLogMessage(messageResult, paramMessage.messageColor.notification);
             }else{
                 await fs.unlink(newParam.oldDir);
                 newParam.cache.delete(newParam.file);

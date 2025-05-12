@@ -36,7 +36,7 @@ export class AddFolder{
             setTimeout(()=>{
                 this.settingsApp.getSettings()
                 .then((res)=>{
-                    res[this.data.folderId][this.data.folderKey] = this.dirFolder[0];
+                    res[this.data.folderId][this.data.folderKey] = this.dirFolder[0] + "\\";
                     this.settingsApp.setSettings(res)
                         .then((res) => { resolve(res[this.data.folderId][this.data.folderKey]) })
                 })

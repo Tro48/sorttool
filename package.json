@@ -1,6 +1,6 @@
 {
   "name": "sorttool",
-  "version": "0.1.1 beta",
+  "version": "0.1.2 beta",
   "description": "Программа для сортировки файлов",
   "main": "./src/app.js",
   "scripts": {
