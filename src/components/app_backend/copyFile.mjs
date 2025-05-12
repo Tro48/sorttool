@@ -113,7 +113,7 @@ export async function copyFile(param, paramMessage) {
             await fs.unlink(newParam.oldDir);
             newParam.cache.delete(newParam.file);
             console.error(err);
-            paramMessage.addLogMessage(newParam.messageResult.copyFileError, paramMessage.messageColor.error);
+            paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
         }
     }
 }
