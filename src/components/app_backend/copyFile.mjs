@@ -72,7 +72,8 @@ export async function copyFile(param, paramMessage) {
                 await fs.unlink(newParam.oldDir);
                 newParam.cache.delete(newParam.file);
                 const date = new Date();
-                paramMessage.addLogMessage((newParam.messageResult.copyFileOk, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options)), paramMessage.messageColor.ok);
+                const messageResult = (newParam.messageResult.copyFileOk + date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options));
+                paramMessage.addLogMessage(messageResult, paramMessage.messageColor.ok);
             }catch(err){
                 console.error(err);
                 setTimeout(() => { copyFile(newParam, paramMessage) }, 2000);
