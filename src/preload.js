@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const { contextBridge, ipcRenderer } = require('electron');
 const { frontConfig, messageColor } = require('./components/app_frontend/js/config/config.mjs')
-const { checkForNewFiles } = require('./components/app_backend/checkForNewFiles.mjs');
+const { checkForNewFiles, CheckForNewFiles } = require('./components/app_backend/checkForNewFiles.mjs');
 const { SettingsApi } = require('./components/app_backend/settingsApi.mjs');
 const { NewRootFolder } = require('./components/app_backend/newRootFolder.mjs');
 const { AddFolder } = require('./components/app_backend/addFolder.mjs');
@@ -10,6 +10,7 @@ const { addNewTag } = require('./components/app_backend/addNewTag.mjs');
 let interevalId;
 
 const settingsFile = './resources/settings.json';
+const checkerFiles = new CheckForNewFiles(settingsFile);
 contextBridge.exposeInMainWorld('preload', {
   frontConfig: ()=> {
     return frontConfig
@@ -30,12 +31,14 @@ contextBridge.exposeInMainWorld('preload', {
     addNewTag({ submitData, rootFolderId, renderTagItem, SettingsApi, settingsFile })
   },
   playScript: (addLogMessage) => {
-    addLogMessage('start', messageColor.ok)
-    interevalId = setInterval(() => { checkForNewFiles({ settingsFile, addLogMessage, messageColor }) }, 2000)
+    checkerFiles.watchPlay()
+    // addLogMessage('start', messageColor.ok)
+    // interevalId = setInterval(() => { checkForNewFiles({ settingsFile, addLogMessage, messageColor }) }, 2000)
   },
   stopScript: (addLogMessage) => {
-    clearInterval(interevalId);
-    addLogMessage('stop', messageColor.error)
+    checkerFiles.watchStop()
+    // clearInterval(interevalId);
+    // addLogMessage('stop', messageColor.error)
   },
   getSettings: (settingsFile, settingsTemplate) => {
     const settingsApi = new SettingsApi(settingsFile, settingsTemplate);

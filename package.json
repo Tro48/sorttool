@@ -30,6 +30,7 @@
     "electron": "^35.0.0"
   },
   "dependencies": {
+    "chokidar": "^4.0.3",
     "electron-squirrel-startup": "^1.0.1",
     "mv": "^2.1.1"
   }
