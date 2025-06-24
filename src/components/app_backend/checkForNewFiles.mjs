@@ -53,7 +53,7 @@ export class CheckForNewFiles {
         const date = new Date();
         const message = copyFileParam.messageResult.copyFileError + date.toLocaleDateString(copyFileParam.optionsDate.lang, copyFileParam.optionsDate.options);
         param.addLogMessage(message, param.messageColor.notification);
-        setTimeout(() => { copyFile(copyFileParam, param) }, 2000);
+        setTimeout(() => { copyFile(copyFileParam, param) }, 500);
     }
     watchPlay(param) {
         this.#setRootFoldersPath()

@@ -76,7 +76,7 @@ export async function copyFile(param, paramMessage) {
                 paramMessage.addLogMessage(messageResult, paramMessage.messageColor.ok);
             }catch(err){
                 console.error(err);
-                setTimeout(() => { copyFile(newParam, paramMessage) }, 2000);
+                // setTimeout(() => { copyFile(newParam, paramMessage) }, 2000);
             }
         } else {
             try{
@@ -94,7 +94,7 @@ export async function copyFile(param, paramMessage) {
             } catch (err) {
                 console.error(err);
                 paramMessage.addLogMessage(newParam.messageResult.copyFileError, paramMessage.messageColor.notification)
-                setTimeout(() => { copyFile(newParam, paramMessage) }, 2000);
+                // setTimeout(() => { copyFile(newParam, paramMessage) }, 2000);
             }
         }
     } else {
