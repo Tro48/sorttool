@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 
 export class GetCopyFileParam{
-    cache
+    // cache
     oldDir
     newDir
     file
@@ -45,9 +45,9 @@ export class GetCopyFileParam{
         }
     }
 
-    constructor(file, settings, cache){
+    constructor(file, settings ){
         this.settings = settings
-        this.cache = cache
+        // this.cache = cache
         this.oldDir = settings.folderPath + file
         this.newDir = this.#calc(settings, file).newDir
         this.file = file
@@ -70,7 +70,7 @@ export async function copyFile(param, paramMessage) {
             try{
                 await fs.copyFile(newParam.oldDir, newParam.newDir);
                 await fs.unlink(newParam.oldDir);
-                newParam.cache.delete(newParam.file);
+                // newParam.cache.delete(newParam.file);
                 const date = new Date();
                 const messageResult = (newParam.messageResult.copyFileOk + date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options));
                 paramMessage.addLogMessage(messageResult, paramMessage.messageColor.ok);
@@ -83,12 +83,12 @@ export async function copyFile(param, paramMessage) {
                 if (newParam.dirDefault) {
                     await fs.copyFile(newParam.oldDir, newParam.dirDefault + newParam.file.replaceAll(' ', '_'));
                     await fs.unlink(newParam.oldDir);
-                    newParam.cache.delete(newParam.file);
+                    // newParam.cache.delete(newParam.file);
                     const date = new Date();
                     paramMessage.addLogMessage((newParam.messageResult.copyFileOther, date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options)), paramMessage.messageColor.notification);
                 } else {
                     await fs.unlink(newParam.oldDir);
-                    newParam.cache.delete(newParam.file);
+                    // newParam.cache.delete(newParam.file);
                     paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
                 }
             } catch (err) {
@@ -102,19 +102,19 @@ export async function copyFile(param, paramMessage) {
             if (newParam.dirDefault){
                 await fs.copyFile(newParam.oldDir, newParam.dirDefault + newParam.file.replaceAll(' ', '_'));
                 await fs.unlink(newParam.oldDir)
-                newParam.cache.delete(newParam.file);
+                // newParam.cache.delete(newParam.file);
                 const date = new Date();
                 const messageResult = newParam.messageResult.copyFileDefaultFolder + date.toLocaleDateString(newParam.optionsDate.lang, newParam.optionsDate.options);
                 paramMessage.addLogMessage(messageResult, paramMessage.messageColor.notification);
             }else{
                 await fs.unlink(newParam.oldDir);
-                newParam.cache.delete(newParam.file);
+                // newParam.cache.delete(newParam.file);
                 paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
             }
             
         } catch (err) {
             await fs.unlink(newParam.oldDir);
-            newParam.cache.delete(newParam.file);
+            // newParam.cache.delete(newParam.file);
             console.error(err);
             paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
         }
