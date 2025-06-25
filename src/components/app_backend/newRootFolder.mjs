@@ -10,7 +10,8 @@ export class NewRootFolder{
 
     returnFolderObj(){
         const settingsLengthObj = Object.keys(this.objSettings).length;
-        const folderId = `folder${settingsLengthObj+1}`;
+        // const folderId = `folder${settingsLengthObj+1}`;
+        const folderId = this.dirFolder[0].split('\\').slice(-1)[0].toLowerCase();
         let adresFolderName = this.dirFolder[0].toLowerCase().split('\\');
         adresFolderName = adresFolderName[adresFolderName.length - 1];
         const newFolder = {
