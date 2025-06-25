@@ -10,6 +10,14 @@ const { addNewTag } = require('./components/app_backend/addNewTag.mjs');
 let interevalId;
 
 const settingsFile = './resources/settings.json';
+
+const settingsTest = new SettingsApi(settingsFile, {});
+let testData = settingsTest.settings
+testData[settingsTest.settingsId[0]].folderPath = 'testApiSet'
+// console.log(settingsTest.settings)
+settingsTest.settings = testData
+console.log(settingsTest.foldersPath)
+
 contextBridge.exposeInMainWorld('preload', {
   frontConfig: ()=> {
     return frontConfig
