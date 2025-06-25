@@ -33,11 +33,9 @@ contextBridge.exposeInMainWorld('preload', {
   playScript: (addLogMessage) => {
     checkerFiles.watchPlay({ settingsFile, addLogMessage, messageColor })
     addLogMessage('start', messageColor.ok)
-    // interevalId = setInterval(() => { checkForNewFiles({ settingsFile, addLogMessage, messageColor }) }, 2000)
   },
   stopScript: (addLogMessage) => {
     checkerFiles.watchStop()
-    // clearInterval(interevalId);
     addLogMessage('stop', messageColor.error)
   },
   getSettings: (settingsFile, settingsTemplate) => {
