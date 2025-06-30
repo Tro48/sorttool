@@ -1,7 +1,6 @@
 const fs = require('fs');
-const path = require('path');
 
-export class SettingsApi{
+export class SettingsApi {
 
     #settingsFile
     #settingsTemplate
@@ -9,11 +8,11 @@ export class SettingsApi{
     #settingsItems
     #foldersPath
 
-    get settings(){
+    get settings() {
         return this.#settingsData
     }
 
-    set settings(newSettings){
+    set settings(newSettings) {
         fs.writeFile(this.#settingsFile, JSON.stringify(newSettings), (err) => {
             if (err) {
                 console.log(err)
@@ -25,11 +24,11 @@ export class SettingsApi{
         })
     }
 
-    get settingsId (){
+    get settingsId() {
         return this.#settingsItems
     }
 
-    get foldersPath(){
+    get foldersPath() {
         return this.#foldersPath
     }
 
@@ -55,51 +54,51 @@ export class SettingsApi{
         }
     }
 
-    #addSettingsItems(){
+    #addSettingsItems() {
         this.#settingsItems = [];
         Object.keys(this.#settingsData).forEach((id) => {
             this.#settingsItems.push(id)
         })
     }
 
-    #addFoldersPath(){
-        if (typeof this.#settingsData[this.#settingsItems[0]] === 'object'){
+    #addFoldersPath() {
+        if (typeof this.#settingsData[this.#settingsItems[0]] === 'object') {
             this.#foldersPath = []
-            this.#settingsItems.forEach((folderItem)=>{
+            this.#settingsItems.forEach((folderItem) => {
                 this.#foldersPath.push(this.#settingsData[folderItem].folderPath)
             })
-        }else{
+        } else {
             this.#foldersPath = []
         }
     }
 
-    getSettings(){
-        const settingsPromise = new Promise((resolve) => {
-              setTimeout(() => {
-                  try{
-                      const settings = JSON.parse(fs.readFileSync(this.#settingsFile, 'utf8'))
-                      resolve(settings)
-                  }catch{
-                      fs.writeFile(this.#settingsFile, JSON.stringify(this.#settingsTemplate), (err) => {
-                          if (err) {
-                              console.log(err)
-                          } else {
-                              const settings = JSON.parse(fs.readFileSync(this.#settingsFile, 'utf8'))
-                              resolve(settings)
-                          }
-                    })
-                  }
-              }, 1)
-            })
-        return settingsPromise
-    }
-    setSettings(newSettings){
+    getSettings() {
         const settingsPromise = new Promise((resolve) => {
             setTimeout(() => {
-                fs.writeFile(this.#settingsFile, JSON.stringify(newSettings),(err)=>{
-                    if(err){
+                try {
+                    const settings = JSON.parse(fs.readFileSync(this.#settingsFile, 'utf8'))
+                    resolve(settings)
+                } catch {
+                    fs.writeFile(this.#settingsFile, JSON.stringify(this.#settingsTemplate), (err) => {
+                        if (err) {
+                            console.log(err)
+                        } else {
+                            const settings = JSON.parse(fs.readFileSync(this.#settingsFile, 'utf8'))
+                            resolve(settings)
+                        }
+                    })
+                }
+            }, 1)
+        })
+        return settingsPromise
+    }
+    setSettings(newSettings) {
+        const settingsPromise = new Promise((resolve) => {
+            setTimeout(() => {
+                fs.writeFile(this.#settingsFile, JSON.stringify(newSettings), (err) => {
+                    if (err) {
                         console.log(err)
-                    }else{
+                    } else {
                         const settings = JSON.parse(fs.readFileSync(this.#settingsFile, 'utf8'))
                         resolve(settings)
                     }

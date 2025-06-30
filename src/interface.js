@@ -18,7 +18,8 @@ const globalSettings = './resources/globalSettings.json';
 const globalSettingsTemplate = {
     autoRunScript: false,
     startWithTheSystem: false,
-    tray: false
+    tray: false,
+    trayMessage: false,
 };
 const data = { folderKey: undefined, folderId: undefined };
 
@@ -27,6 +28,7 @@ const initialApp = () => {
     const getSettingsApp = window.preload.getSettings(globalSettings, globalSettingsTemplate);
     Promise.all([getSettingsScript, getSettingsApp])
         .then(([settingsScript, settingsApp]) => {
+            window.preload.setGlobalSettings(settingsApp)
             const settingsKeys = Object.keys(settingsScript);
             if (settingsKeys.length && settingsApp.autoRunScript) {
                 renderSettings(settingsScript);
@@ -105,6 +107,7 @@ function renderLogMessage(message, messageColor) {
         } else if (message === config.dot & lastBlockNotification.classList.contains('message-notification')) {
             lastBlockNotification.lastElementChild.textContent = lastBlockNotification.textContent + message
         } else {
+            window.preload.setTrayMessage(message);
             const newMessageTime = document.createElement('span');
             newMessageTime.textContent = time.toLocaleTimeString("ru-RU");
             newMessageTime.style = 'color:red'
