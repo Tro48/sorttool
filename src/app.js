@@ -1,9 +1,10 @@
-const { app, BrowserWindow, dialog, ipcMain } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, Tray, Menu } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const url = require('url');
-
-let win 
+let appIconTray = null;
+let win
+const appIconPath = path.join(__dirname, "/components/app_frontend/img/app_icon.png");
 
 ipcMain.on('click-button', (event, arg) => {
   event.returnValue = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
@@ -14,28 +15,29 @@ ipcMain.on('click-openFile', (event, arg) => {
     filters: [{
       name: 'json Files',
       extensions: ['json']
-    }], properties: ['openFile'] });
+    }], properties: ['openFile']
+  });
 });
 
 ipcMain.on('click-upload', (event, arg) => {
   event.returnValue = dialog.showSaveDialogSync({
-    defaultPath: 'settings.json',filters: [{
-    name: 'json Files',
-    extensions: ['json'] 
-  }], properties: [] });
+    defaultPath: 'settings.json', filters: [{
+      name: 'json Files',
+      extensions: ['json']
+    }], properties: []
+  });
 
 })
 
 const createWindow = () => {
-  
   win = new BrowserWindow({
     icon: __dirname + "/components/app_frontend/img/app_icon.png",
     width: 1000,
     height: 1000,
     autoHideMenuBar: true,
     webPreferences: {
-        nodeIntegration: true,
-        preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: true,
+      preload: path.join(__dirname, 'preload.js'),
     }
   });
 
@@ -45,7 +47,7 @@ const createWindow = () => {
     slashes: true,
   }));
 
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null
@@ -57,3 +59,16 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
   app.quit()
 });
+
+app.whenReady().then(()=>{
+  if (appIconTray) {
+    return app.hide();
+  } else {
+    appIconTray = new Tray(appIconPath)
+    appIconTray.setToolTip('SortTool')
+    appIconTray.on('click', event => {
+      event.preventDefault
+      win.isVisible() ? win.hide() : win.show()
+    })
+  }
+})
