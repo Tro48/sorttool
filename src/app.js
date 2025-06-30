@@ -47,7 +47,7 @@ const createWindow = () => {
     slashes: true,
   }));
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null
@@ -60,15 +60,11 @@ app.on('window-all-closed', () => {
   app.quit()
 });
 
-app.whenReady().then(()=>{
-  if (appIconTray) {
-    return app.hide();
-  } else {
-    appIconTray = new Tray(appIconPath)
-    appIconTray.setToolTip('SortTool')
-    appIconTray.on('click', event => {
-      event.preventDefault
-      win.isVisible() ? win.hide() : win.show()
-    })
-  }
+app.whenReady().then(() => {
+  appIconTray = new Tray(appIconPath)
+  appIconTray.setToolTip('SortTool')
+  appIconTray.on('click', event => {
+    event.preventDefault
+    win.isVisible() ? win.hide() : win.show()
+  })
 })
