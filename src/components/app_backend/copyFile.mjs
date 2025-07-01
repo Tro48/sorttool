@@ -106,7 +106,7 @@ export async function copyFile(param, paramMessage) {
         } catch (err) {
             await fs.unlink(newParam.oldDir);
             console.error(err);
-            paramMessage.addLogMessage({message:newParam.messageResult.noDirdefault, error:true}, paramMessage.messageColor.error);
+            paramMessage.addLogMessage({ message: newParam.messageResult.copyFileDefaultFolder, error:true}, paramMessage.messageColor.error);
         }
     }
 }
