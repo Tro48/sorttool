@@ -1,4 +1,4 @@
-const { app, BrowserWindow, dialog, ipcMain, Tray } = require('electron');
+const { app, BrowserWindow, dialog, ipcMain, Tray, nativeTheme } = require('electron');
 const path = require('path');
 const url = require('url');
 let appIconTray = null;
@@ -65,7 +65,6 @@ const appInTray = () => {
     !win.isVisible() && win.hide()
   })
 }
-
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
@@ -75,6 +74,7 @@ app.on('window-all-closed', () => {
 app.whenReady().then(() => {
   ipcMain.on('settingsApp', (event, data) => {
     globalSettings = data
+    nativeTheme.themeSource = globalSettings.theme;
     app.setLoginItemSettings({
       openAtLogin: globalSettings.startWithTheSystem,
       openAsHidden: globalSettings.tray,

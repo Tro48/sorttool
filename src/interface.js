@@ -21,6 +21,7 @@ const globalSettingsTemplate = {
     tray: false,
     trayMessage: false,
     trayMessageSound: false,
+    theme: 'system'
 };
 const data = { folderKey: undefined, folderId: undefined };
 
