@@ -85,7 +85,7 @@ app.whenReady().then(() => {
     }
     if (globalSettings.trayMessage) {
       ipcMain.on('trayMessage', (event, message) => {
-        appIconTray.displayBalloon({ title: 'Внимание!', content: message, noSound: false, largeIcon: false })
+        appIconTray.displayBalloon({ title: 'Внимание!', content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
       })
     }
   })

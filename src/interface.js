@@ -20,6 +20,7 @@ const globalSettingsTemplate = {
     startWithTheSystem: false,
     tray: false,
     trayMessage: false,
+    trayMessageSound: false,
 };
 const data = { folderKey: undefined, folderId: undefined };
 
@@ -95,9 +96,7 @@ function openSettingsButton() {
 }
 
 function renderLogMessage({ message, error }, messageColor) {
-    console.log(message, error)
-    if (error) { window.preload.setTrayMessage(message) }
-    // error && window.preload.setTrayMessage(message);
+    error && window.preload.setTrayMessage(message);
     const lastBlockNotification = logSection.lastElementChild;
     const time = new Date();
     if (lastBlockNotification) {

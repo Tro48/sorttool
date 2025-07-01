@@ -55,8 +55,8 @@ export class GetCopyFileParam{
         this.searchResult = this.#calc(settings, file).searchResult
         this.messageResult = {
             copyFileOk: `Файл ${this.file} перемещён в ${this.newDir} `,
-            copyFileOther: `ERROR: Файл ${this.file} перемещён в дефолтную папку ${this.dirDefault}. Проверьте имя файла или создайте нужную папку. `,
-            copyFileDefaultFolder: `ERROR: НЕТ СОВПАДЕНИЙ! Файл ${this.file} перемещён в дефолтную папку ${this.dirDefault}. `,
+            copyFileOther: `Файл ${this.file} перемещён в дефолтную папку ${this.dirDefault}. Проверьте имя файла или создайте нужную папку. `,
+            copyFileDefaultFolder: `НЕТ СОВПАДЕНИЙ! Файл ${this.file} перемещён в дефолтную папку ${this.dirDefault}. `,
             copyFileError: `Ожидание файла ${this.file} ... ` ,
             noDirdefault: `Нет папки для неизвестных файлов. ${this.file} удалён! `
         }
@@ -96,7 +96,6 @@ export async function copyFile(param, paramMessage) {
             if (newParam.dirDefault){
                 await fs.copyFile(newParam.oldDir, newParam.dirDefault + newParam.file.replaceAll(' ', '_'));
                 await fs.unlink(newParam.oldDir)
-
                 const messageResult = newParam.messageResult.copyFileDefaultFolder;
                 paramMessage.addLogMessage({ message: messageResult, error: true }, paramMessage.messageColor.notification);
             }else{
