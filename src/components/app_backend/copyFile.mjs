@@ -1,3 +1,5 @@
+import { error } from 'console';
+
 const fs = require('fs/promises');
 
 export class GetCopyFileParam{
@@ -69,7 +71,7 @@ export async function copyFile(param, paramMessage) {
                 await fs.copyFile(newParam.oldDir, newParam.newDir);
                 await fs.unlink(newParam.oldDir);
                 const messageResult = (newParam.messageResult.copyFileOk);
-                paramMessage.addLogMessage(messageResult, paramMessage.messageColor.ok);
+                paramMessage.addLogMessage({ message: messageResult, error: false }, paramMessage.messageColor.ok);
             }catch(err){
                 // console.log('ожидание...')
                 // console.error(err);
@@ -79,15 +81,14 @@ export async function copyFile(param, paramMessage) {
                 if (newParam.dirDefault) {
                     await fs.copyFile(newParam.oldDir, newParam.dirDefault + newParam.file.replaceAll(' ', '_'));
                     await fs.unlink(newParam.oldDir);
-
-                    paramMessage.addLogMessage((newParam.messageResult.copyFileOther), paramMessage.messageColor.notification);
+                    paramMessage.addLogMessage({ message: newParam.messageResult.copyFileOther, error: true }, paramMessage.messageColor.notification);
                 } else {
                     await fs.unlink(newParam.oldDir);
-                    paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
+                    paramMessage.addLogMessage({ message: newParam.messageResult.noDirdefault, error: true }, paramMessage.messageColor.error);
                 }
             } catch (err) {
                 console.error(err);
-                paramMessage.addLogMessage(newParam.messageResult.copyFileError, paramMessage.messageColor.notification)
+                paramMessage.addLogMessage({ message: newParam.messageResult.copyFileError, error: true }, paramMessage.messageColor.notification)
             }
         }
     } else {
@@ -97,16 +98,16 @@ export async function copyFile(param, paramMessage) {
                 await fs.unlink(newParam.oldDir)
 
                 const messageResult = newParam.messageResult.copyFileDefaultFolder;
-                paramMessage.addLogMessage(messageResult, paramMessage.messageColor.notification);
+                paramMessage.addLogMessage({ message: messageResult, error: true }, paramMessage.messageColor.notification);
             }else{
                 await fs.unlink(newParam.oldDir);
-                paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
+                paramMessage.addLogMessage({ message: newParam.messageResult.noDirdefault, error:true}, paramMessage.messageColor.error);
             }
             
         } catch (err) {
             await fs.unlink(newParam.oldDir);
             console.error(err);
-            paramMessage.addLogMessage(newParam.messageResult.noDirdefault, paramMessage.messageColor.error);
+            paramMessage.addLogMessage({message:newParam.messageResult.noDirdefault, error:true}, paramMessage.messageColor.error);
         }
     }
 }

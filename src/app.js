@@ -82,11 +82,11 @@ app.whenReady().then(() => {
     })
     if (globalSettings.tray) {
       appInTray()
-      if (globalSettings.trayMessage) {
-        ipcMain.on('trayMessage', (event, message) => {
-          appIconTray.displayBalloon({ title: 'Событие', content: message, noSound: true, largeIcon: false })
-        })
-      }
+    }
+    if (globalSettings.trayMessage) {
+      ipcMain.on('trayMessage', (event, message) => {
+        appIconTray.displayBalloon({ title: 'Внимание!', content: message, noSound: false, largeIcon: false })
+      })
     }
   })
 })

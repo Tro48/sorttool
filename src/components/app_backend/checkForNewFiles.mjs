@@ -27,9 +27,7 @@ export class CheckForNewFiles {
         const fileName = path.split('\\').slice(-1)[0]
         const rootName = path.split('\\').slice(-2)[0]
         const copyFileParam = new GetCopyFileParam(fileName, this.settingsApp[rootName]);
-        const date = new Date();
-        const message = copyFileParam.messageResult.copyFileError + date.toLocaleDateString(copyFileParam.optionsDate.lang, copyFileParam.optionsDate.options);
-        param.addLogMessage(frontConfig.dot, param.messageColor.notification);
+        param.addLogMessage({ message: frontConfig.dot, error: false }, param.messageColor.notification);
         setTimeout(() => { copyFile(copyFileParam, param) }, 500);
     }
     watchPlay(param) {

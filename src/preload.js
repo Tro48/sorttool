@@ -32,11 +32,11 @@ contextBridge.exposeInMainWorld('preload', {
   },
   playScript: (addLogMessage) => {
     checkerFiles.watchPlay({ settingsFile, addLogMessage, messageColor })
-    addLogMessage('start', messageColor.ok)
+    addLogMessage({ message: 'start', error: false }, messageColor.ok)
   },
   stopScript: (addLogMessage) => {
     checkerFiles.watchStop()
-    addLogMessage('stop', messageColor.error)
+    addLogMessage({ message: 'stop', error: false }, messageColor.error)
   },
   getSettings: (settingsFile, settingsTemplate) => {
     const settingsApi = new SettingsApi(settingsFile, settingsTemplate);
