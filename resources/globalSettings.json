@@ -1,1 +1,1 @@
-{"autoRunScript":false,"startWithTheSystem":false,"tray":false, "trayMessage": true}
+{"autoRunScript":false,"startWithTheSystem":true,"tray":true, "trayMessage": false}

@@ -1,12 +1,13 @@
 const { app, BrowserWindow, dialog, ipcMain, Tray } = require('electron');
 const path = require('path');
-const fs = require('fs');
 const url = require('url');
 let appIconTray = null;
 let win
 const appIconPath = path.join(__dirname, "/components/app_frontend/img/app_icon.png");
 let globalSettings
-
+const appFolder = path.dirname(process.execPath)
+const ourExeName = path.basename(process.execPath)
+const stubLauncher = path.resolve(appFolder, '..', ourExeName)
 ipcMain.on('click-button', (event) => {
   event.returnValue = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
 });
@@ -29,7 +30,6 @@ ipcMain.on('click-upload', (event) => {
   });
 
 })
-
 const createWindow = () => {
   win = new BrowserWindow({
     icon: __dirname + "/components/app_frontend/img/app_icon.png",
@@ -54,6 +54,17 @@ const createWindow = () => {
     win = null
   })
 };
+const appInTray = () => {
+  appIconTray = new Tray(appIconPath)
+  appIconTray.setToolTip('SortTool')
+  appIconTray.setTitle('SortTool')
+  appIconTray.on('click', () => {
+    win.isVisible() ? win.hide() : win.show()
+  })
+  win.on('minimize', () => {
+    !win.isVisible() && win.hide()
+  })
+}
 
 app.on('ready', createWindow);
 
@@ -62,19 +73,20 @@ app.on('window-all-closed', () => {
 });
 
 app.whenReady().then(() => {
-  appIconTray = new Tray(appIconPath)
-  appIconTray.setToolTip('SortTool')
-  appIconTray.setTitle('SortTool')
-  appIconTray.on('click', event => {
-    event.preventDefault
-    win.isVisible() ? win.hide() : win.show()
-  })
   ipcMain.on('settingsApp', (event, data) => {
     globalSettings = data
-    if (globalSettings.trayMessage) {
-      ipcMain.on('trayMessage', (event, message) => {
-        appIconTray.displayBalloon({ title: 'Событие', content: message, noSound: true, largeIcon : false})
-      })
+    app.setLoginItemSettings({
+      openAtLogin: globalSettings.startWithTheSystem,
+      openAsHidden: globalSettings.tray,
+      path: stubLauncher
+    })
+    if (globalSettings.tray) {
+      appInTray()
+      if (globalSettings.trayMessage) {
+        ipcMain.on('trayMessage', (event, message) => {
+          appIconTray.displayBalloon({ title: 'Событие', content: message, noSound: true, largeIcon: false })
+        })
+      }
     }
   })
 })
