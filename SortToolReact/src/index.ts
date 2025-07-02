@@ -1,22 +1,51 @@
 import { app, BrowserWindow, dialog, ipcMain, nativeTheme, Tray } from 'electron';
 import path from 'path';
+import { SettingsApi } from './components/base/settingsApi';
+import { GlobalSettings } from './components/types/types';
 let appIconTray: Tray | null = null;
 let win: BrowserWindow | null
-let globalSettings: {
-  autoRunScript?: boolean;
-  theme?: string;
-  startWithTheSystem?: boolean;
-  tray?: boolean;
-  trayMessage?: boolean;
-  trayMessageSound?: boolean;
-} = {};
+let globalSettings: GlobalSettings = {};
+const globalSettingsPath = './resources/globalSettings.json'
 const appFolder = path.dirname(process.execPath)
 const ourExeName = path.basename(process.execPath)
 const stubLauncher = path.resolve(appFolder, '..', ourExeName)
 const appIconPath = path.join(__dirname, "/img/app_icon.png");
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+const globalSettingsTemplate = {
+    autoRunScript: false,
+    startWithTheSystem: false,
+    tray: false,
+    trayMessage: false,
+    trayMessageSound: false,
+    theme: 'system'
+};
 
+const getSettings = (settingsData:GlobalSettings|object, fileSettingsPath:string, templateSettings:GlobalSettings, callback:(arg0: GlobalSettings)=>void) => {
+  const newSettings = new SettingsApi(fileSettingsPath, templateSettings);
+  newSettings.getSettings().then((res)=>{
+    callback(res)
+  })
+}
+const readySettingsApp = (settings:GlobalSettings):void => {
+    globalSettings = settings
+    if (globalSettings.theme === 'system' || globalSettings.theme === 'light' || globalSettings.theme === 'dark') {
+      nativeTheme.themeSource = globalSettings.theme;
+    }
+    app.setLoginItemSettings({
+      openAtLogin: globalSettings.startWithTheSystem,
+      openAsHidden: globalSettings.tray,
+      path: stubLauncher
+    })
+    if (globalSettings.tray) {
+      appInTray()
+    }
+    if (globalSettings.trayMessage) {
+      ipcMain.on('trayMessage', (event, message) => {
+        appIconTray.displayBalloon({ title: 'Внимание!', content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
+      })
+    }
+  }
 
 if (require('electron-squirrel-startup')) {
   app.quit();
@@ -35,12 +64,13 @@ const createWindow = (): void => {
 
     win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  // win.webContents.openDevTools();
+  win.webContents.openDevTools();
 
   win.on('closed', () => {
     win = null
   })
 };
+
 const appInTray = (): void => {
   appIconTray = new Tray(appIconPath)
   appIconTray.setToolTip('SortTool')
@@ -85,25 +115,7 @@ app.on('activate', () => {
 });
 
 app.whenReady().then(() => {
-  ipcMain.on('settingsApp', (event, data) => {
-    globalSettings = data
-    if (globalSettings.theme === 'system' || globalSettings.theme === 'light' || globalSettings.theme === 'dark') {
-      nativeTheme.themeSource = globalSettings.theme;
-    }
-    app.setLoginItemSettings({
-      openAtLogin: globalSettings.startWithTheSystem,
-      openAsHidden: globalSettings.tray,
-      path: stubLauncher
-    })
-    if (globalSettings.tray) {
-      appInTray()
-    }
-    if (globalSettings.trayMessage) {
-      ipcMain.on('trayMessage', (event, message) => {
-        appIconTray.displayBalloon({ title: 'Внимание!', content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
-      })
-    }
-  })
+  getSettings(globalSettings, globalSettingsPath, globalSettingsTemplate,readySettingsApp);
 })
 
 ipcMain.on('click-button', (event) => {

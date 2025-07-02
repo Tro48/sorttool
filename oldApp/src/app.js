@@ -2,7 +2,7 @@ const { app, BrowserWindow, dialog, ipcMain, Tray, nativeTheme } = require('elec
 const path = require('path');
 const url = require('url');
 let appIconTray = null;
-let win
+let mainWindow
 const appIconPath = path.join(__dirname, "/components/app_frontend/img/app_icon.png");
 let globalSettings
 const appFolder = path.dirname(process.execPath)
@@ -31,7 +31,7 @@ ipcMain.on('click-upload', (event) => {
 
 })
 const createWindow = () => {
-  win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     icon: __dirname + "/components/app_frontend/img/app_icon.png",
     width: 1000,
     height: 1000,
@@ -42,16 +42,16 @@ const createWindow = () => {
     }
   });
 
-  win.loadURL(url.format({
+  mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'app.html'),
     protocol: 'file:',
     slashes: true,
   }));
 
-  // win.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
-  win.on('closed', () => {
-    win = null
+  mainWindow.on('closed', () => {
+    mainWindow = null
   })
 };
 const appInTray = () => {
@@ -59,10 +59,10 @@ const appInTray = () => {
   appIconTray.setToolTip('SortTool')
   appIconTray.setTitle('SortTool')
   appIconTray.on('click', () => {
-    win.isVisible() ? win.hide() : win.show()
+    mainWindow.isVisible() ? win.hide() : win.show()
   })
-  win.on('minimize', () => {
-    !win.isVisible() && win.hide()
+  mainWindow.on('minimize', () => {
+    !mainWindow.isVisible() && mainWindow.hide()
   })
 }
 app.on('ready', createWindow);
