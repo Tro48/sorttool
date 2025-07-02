@@ -1,11 +1,14 @@
 import { app, BrowserWindow, dialog, ipcMain, nativeTheme, Tray } from 'electron';
 import path from 'path';
 import { SettingsApi } from './components/base/settingsApi';
-import { GlobalSettings } from './components/types/types';
+import { GlobalSettings, SettingsScript } from './components/types/types';
 let appIconTray: Tray | null = null;
-let win: BrowserWindow | null
-let globalSettings: GlobalSettings = {};
-const globalSettingsPath = './resources/globalSettings.json'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+let mainWindow: BrowserWindow | null;
+let globalSettings: GlobalSettings;
+let settingsScript: SettingsScript
+const globalSettingsPath = './resources/globalSettings.json';
+const settingsScriptPath = './resources/settings.json';
 const appFolder = path.dirname(process.execPath)
 const ourExeName = path.basename(process.execPath)
 const stubLauncher = path.resolve(appFolder, '..', ourExeName)
@@ -21,7 +24,7 @@ const globalSettingsTemplate = {
     theme: 'system'
 };
 
-const getSettings = (settingsData:GlobalSettings|object, fileSettingsPath:string, templateSettings:GlobalSettings, callback:(arg0: GlobalSettings)=>void) => {
+const getSettings = (fileSettingsPath:string, templateSettings:GlobalSettings | object, callback:(arg0: GlobalSettings | SettingsScript)=>void) => {
   const newSettings = new SettingsApi(fileSettingsPath, templateSettings);
   newSettings.getSettings().then((res)=>{
     callback(res)
@@ -46,12 +49,17 @@ const readySettingsApp = (settings:GlobalSettings):void => {
       })
     }
   }
+const readySettingsScript = (settings:SettingsScript): void => {
+  settingsScript = settings
+}
+
+getSettings(settingsScriptPath, {}, readySettingsScript)
 
 if (require('electron-squirrel-startup')) {
   app.quit();
 }
 const createWindow = (): void => {
-  win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     icon: appIconPath,
     width: 1000,
     height: 1000,
@@ -62,12 +70,12 @@ const createWindow = (): void => {
     }
   });
 
-    win.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
-  win.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 
-  win.on('closed', () => {
-    win = null
+  mainWindow.on('closed', () => {
+    mainWindow = null
   })
 };
 
@@ -76,10 +84,10 @@ const appInTray = (): void => {
   appIconTray.setToolTip('SortTool')
   appIconTray.setTitle('SortTool')
   appIconTray.on('click', () => {
-    win.isVisible() ? win.hide() : win.show()
+    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show()
   })
-  win.on('minimize', () => {
-    !win.isVisible() && win.hide()
+  mainWindow.on('minimize', () => {
+    !mainWindow.isVisible() && mainWindow.hide()
   })
 }
 // const createWindow = (): void => {
@@ -115,7 +123,8 @@ app.on('activate', () => {
 });
 
 app.whenReady().then(() => {
-  getSettings(globalSettings, globalSettingsPath, globalSettingsTemplate,readySettingsApp);
+  getSettings(globalSettingsPath, globalSettingsTemplate, readySettingsApp);
+  ipcMain.handle('settingsScript-load',() => settingsScript);
 })
 
 ipcMain.on('click-button', (event) => {
