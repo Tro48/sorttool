@@ -1,63 +1,51 @@
-import { app, BrowserWindow, dialog, ipcMain, nativeTheme, Tray } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, nativeTheme, Tray, nativeImage } from 'electron';
 import path from 'path';
+import fs from 'fs';
 import { SettingsApi } from './components/base/settingsApi';
-import { GlobalSettings, SettingsScript } from './components/types/types';
+import { GlobalSettings } from './components/types/types';
+
 let appIconTray: Tray | null = null;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let mainWindow: BrowserWindow | null;
 let globalSettings: GlobalSettings;
-let settingsScript: SettingsScript
+
 const globalSettingsPath = './resources/globalSettings.json';
 const settingsScriptPath = './resources/settings.json';
 const appFolder = path.dirname(process.execPath)
 const ourExeName = path.basename(process.execPath)
 const stubLauncher = path.resolve(appFolder, '..', ourExeName)
-const appIconPath = path.join(__dirname, "/img/app_icon.png");
+const appIconPath = nativeImage.createFromPath(path.join(__dirname, 'img', 'app.png'));
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 const globalSettingsTemplate = {
     autoRunScript: false,
     startWithTheSystem: false,
-    tray: false,
+    tray: true,
     trayMessage: false,
     trayMessageSound: false,
     theme: 'system'
 };
-
-const getSettings = (fileSettingsPath:string, templateSettings:GlobalSettings | object, callback:(arg0: GlobalSettings | SettingsScript)=>void) => {
-  const newSettings = new SettingsApi(fileSettingsPath, templateSettings);
-  newSettings.getSettings().then((res)=>{
-    callback(res)
-  })
-}
-const readySettingsApp = (settings:GlobalSettings):void => {
-    globalSettings = settings
-    if (globalSettings.theme === 'system' || globalSettings.theme === 'light' || globalSettings.theme === 'dark') {
-      nativeTheme.themeSource = globalSettings.theme;
-    }
-    app.setLoginItemSettings({
-      openAtLogin: globalSettings.startWithTheSystem,
-      openAsHidden: globalSettings.tray,
-      path: stubLauncher
-    })
-    if (globalSettings.tray) {
-      appInTray()
-    }
-    if (globalSettings.trayMessage) {
-      ipcMain.on('trayMessage', (event, message) => {
-        appIconTray.displayBalloon({ title: 'Внимание!', content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
-      })
-    }
+const settingsinit = (settingsPath:string, settingsTemplate:object) => {
+  try {
+    fs.readFileSync(settingsPath, 'utf8')
+  } catch {
+    fs.writeFileSync(settingsPath, JSON.stringify(settingsTemplate, null, 2), 'utf8');
   }
-const readySettingsScript = (settings:SettingsScript): void => {
-  settingsScript = settings
 }
+settingsinit(globalSettingsPath, globalSettingsTemplate);
+settingsinit(settingsScriptPath, {});
 
-getSettings(settingsScriptPath, {}, readySettingsScript)
+const settingsApi = new SettingsApi(globalSettingsPath, globalSettingsTemplate);
+const settingsScriptApi = new SettingsApi(settingsScriptPath, {});
 
-if (require('electron-squirrel-startup')) {
-  app.quit();
-}
+settingsApi.getSettings()
+.then((res: GlobalSettings) => {
+  globalSettings = res;
+})
+.catch((err: Error) => {console.error('Error loading global settings:', err)})
+
+// if (require('electron-squirrel-startup')) {
+//   app.quit();
+// }
 const createWindow = (): void => {
   mainWindow = new BrowserWindow({
     icon: appIconPath,
@@ -70,7 +58,7 @@ const createWindow = (): void => {
     }
   });
 
-    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
+  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   mainWindow.webContents.openDevTools();
 
@@ -80,7 +68,7 @@ const createWindow = (): void => {
 };
 
 const appInTray = (): void => {
-  appIconTray = new Tray(appIconPath)
+  appIconTray = new Tray(appIconPath);
   appIconTray.setToolTip('SortTool')
   appIconTray.setTitle('SortTool')
   appIconTray.on('click', () => {
@@ -90,41 +78,46 @@ const appInTray = (): void => {
     !mainWindow.isVisible() && mainWindow.hide()
   })
 }
-// const createWindow = (): void => {
-//   // Create the browser window.
-//   const mainWindow = new BrowserWindow({
-//     height: 600,
-//     width: 800,
-//     webPreferences: {
-//       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
-//     },
-//   });
-
-//   // and load the index.html of the app.
-//   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-//   // Open the DevTools.
-//   mainWindow.webContents.openDevTools();
-// };
 
 app.on('ready', createWindow);
 
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  app.quit();
 });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
+// app.on('activate', () => {
+//   if (BrowserWindow.getAllWindows().length === 0) {
+//     createWindow();
+//   }
+// });
 
 app.whenReady().then(() => {
-  getSettings(globalSettingsPath, globalSettingsTemplate, readySettingsApp);
-  ipcMain.handle('settingsScript-load',() => settingsScript);
+
+  ipcMain.handle('getGlobalSettings',() => globalSettings);
+  ipcMain.on('setGlobalSettings',(event, newSettings) => {
+      return settingsApi.setSettings(newSettings)
+    });
+  ipcMain.handle('getScriptSettings',() => {
+      return settingsScriptApi.getSettings()
+    });
+  ipcMain.on('setScriptSettings',(event, newSettings) => {
+      return settingsScriptApi.setSettings(newSettings)
+    });
+  nativeTheme.themeSource = (["system", "light", "dark"].includes(globalSettings.theme) ? globalSettings.theme : "system") as "system" | "light" | "dark";
+  app.setLoginItemSettings({
+    openAtLogin: globalSettings.startWithTheSystem,
+    openAsHidden: globalSettings.tray,
+    path: stubLauncher
+  })
+  if (globalSettings.tray) {
+    appInTray()
+  }
+  if (globalSettings.trayMessage) {
+    ipcMain.on('trayMessage', (event, message) => {
+      appIconTray.displayBalloon({ title: 'Внимание!', content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
+    })
+  }
 })
 
 ipcMain.on('click-button', (event) => {

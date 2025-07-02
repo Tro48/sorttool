@@ -1,7 +1,7 @@
 {
   "name": "sorttool",
-  "productName": "my-new-app",
-  "version": "0.1.9 beta",
+  "productName": "SortTool",
+  "version": "0.1.9-beta",
   "description": "Программа для сортировки файлов",
   "main": ".webpack/main",
   "scripts": {

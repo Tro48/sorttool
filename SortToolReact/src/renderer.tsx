@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { App } from "./App";
 declare global {
   interface Window {
-    preload: any
+    [key:string]: any
   }
 }
 
