@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './App';
+import { App } from './components/UI/App/App';
+import './globalStyle/global.css';
+import './globalStyle/variables.css';
 declare global {
 	interface Window {
 		[key: string]: any;

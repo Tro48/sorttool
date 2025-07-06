@@ -1,0 +1,26 @@
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5px;
+	max-inline-size: 100px;
+	max-block-size: 100px;
+	border: none;
+	cursor: pointer;
+	background-color: rgb(113, 113, 113);
+	transition: background-color 0.3s;
+	box-shadow: 0 0 15px 5px rgba(60, 60, 60, 0.3) inset;
+}
+
+.button:hover {
+	background-color: rgb(122, 122, 122);
+	transition: 0.3s;
+}
+
+.button:active {
+	scale: 0.9;
+}
+
+.buttonNone {
+	display: none;
+}

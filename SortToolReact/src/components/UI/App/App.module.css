@@ -1,0 +1,29 @@
+.app {
+	display: grid;
+	grid-template-columns: 100% 0;
+	margin: 10px;
+	max-block-size: 97vh;
+	overflow-y: visible;
+	overflow-x: clip;
+	background-color: #3c3c3c;
+	border: 1px solid black;
+	border-radius: 5px;
+	transition: grid-template-columns 1s;
+}
+
+.settingsActive {
+	grid-template-columns: 10% 90%;
+	transition: grid-template-columns 1s;
+}
+
+.settings {
+	display: flex;
+	flex-direction: column;
+	block-size: 97vh;
+	overflow: hidden;
+	border-left: 1px solid black;
+	border-bottom: 1px solid black;
+	border-radius: 5px;
+	background-color: #333333;
+	transition: 1s;
+}

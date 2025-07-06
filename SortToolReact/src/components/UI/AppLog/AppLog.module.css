@@ -1,0 +1,19 @@
+.section {
+	display: flex;
+	align-items: center;
+	block-size: 90%;
+	inline-size: 90%;
+	overflow: auto;
+	flex-direction: column;
+	gap: 5px;
+	padding: 20px;
+	margin: 5%;
+	border: 1px solid black;
+	border-radius: 5px;
+	scrollbar-width: thin;
+	scrollbar-color: rgb(113, 113, 113) #3c3c3c;
+}
+
+.sectionNone {
+	display: none;
+}

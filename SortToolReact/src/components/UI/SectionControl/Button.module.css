@@ -1,0 +1,94 @@
+.buttonSettingsActive {
+	position: absolute;
+	min-inline-size: 35px;
+	min-block-size: 35px;
+	max-inline-size: fit-content;
+	top: 0;
+	right: -35px;
+	background-color: #3c3c3c;
+	border-radius: 0;
+	overflow: visible;
+	transition: 0.5s;
+}
+
+.buttonSettings {
+	position: absolute;
+	top: 0;
+	right: 0;
+	max-inline-size: fit-content;
+	max-block-size: fit-content;
+	border-radius: 5px;
+	background-color: #333333;
+}
+
+.buttonTextBlock {
+	padding: 2px;
+	text-transform: uppercase;
+	writing-mode: vertical-lr;
+	transform: rotate(180deg);
+	transition: 0.5s;
+}
+
+.buttonSettingsActive:hover {
+	background-color: #333333;
+}
+
+.buttonSettingsActive .buttonTextBlock {
+	transform: rotate(0deg);
+	transition: 0.5s;
+}
+
+.buttonPlay {
+	inline-size: 80px;
+	block-size: 80px;
+	border-radius: 50%;
+	transition: 0.5s;
+}
+
+.buttonPlaySettingsActive {
+	max-inline-size: 35px;
+	max-block-size: 35px;
+	transition: 0.5s;
+}
+
+.playIcon {
+	margin-left: 10px;
+	border-top: 25px solid transparent;
+	border-bottom: 25px solid transparent;
+	border-left: 40px solid #1ede00;
+	transition: 0.5s;
+}
+
+.buttonPlay:hover .playIcon {
+	border-left-color: #159e00;
+	transition: border-left-color 0.3s;
+}
+
+.stopIcon {
+	transform-origin: center;
+	inline-size: 40px;
+	block-size: 40px;
+	background-color: #ff3d00;
+	border-radius: 5px;
+	transition: 0.5s;
+}
+
+.button:hover .stopIcon {
+	background-color: #c52e00;
+	transition: background-color 0.3s;
+}
+
+.buttonPlaySettingsActive .playIcon {
+	margin-left: 5px;
+	border-top-width: 10px;
+	border-bottom-width: 10px;
+	border-left-width: 15px;
+	transition: 0.5s;
+}
+
+.buttonPlaySettingsActive .stopIcon {
+	inline-size: 15px;
+	block-size: 15px;
+	border-radius: 3px;
+	transition: 0.5s;
+}

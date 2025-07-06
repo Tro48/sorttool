@@ -1,0 +1,23 @@
+.message {
+	display: flex;
+	align-items: center;
+	border: 1px solid black;
+	inline-size: 95%;
+	min-block-size: fit-content;
+	padding: 5px;
+	border-radius: 5px;
+	background-color: #333333;
+}
+
+.error {
+	color: #ff3d00;
+}
+
+.ok {
+	color: #1ede00;
+}
+
+.notification {
+	color: white;
+	padding: 0 5px;
+}
