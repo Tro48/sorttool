@@ -6,6 +6,7 @@ const { SettingsApi } = require('./components/app_backend/settingsApi.mjs');
 const { NewRootFolder } = require('./components/app_backend/newRootFolder.mjs');
 const { AddFolder } = require('./components/app_backend/addFolder.mjs');
 const { addNewTag } = require('./components/app_backend/addNewTag.mjs');
+console.log('preload.....')
 
 
 const settingsFile = './resources/settings.json';

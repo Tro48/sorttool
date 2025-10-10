@@ -17,11 +17,12 @@ const settingsFile = './resources/settings.json';
 const globalSettings = './resources/globalSettings.json';
 const globalSettingsTemplate = {
     autoRunScript: false,
-    startWithTheSystem: false,
-    tray: false,
-    trayMessage: false,
+    startWithTheSystem: true,
+    tray: true, 
+    trayMessage: true,
     trayMessageSound: false,
-    theme: 'system'
+    theme: "dark",
+    trayMessageTitle: "SortTool"
 };
 const data = { folderKey: undefined, folderId: undefined };
 
@@ -49,12 +50,6 @@ const initialApp = () => {
                 tabsSection.children[0].classList.add(config.activeClasses.tabActive);
             }
         })
-    getSettingsScript.then((res) => {
-        const settingsKeys = Object.keys(res);
-        if (settingsKeys.length) {
-
-        }
-    })
 }
 
 initialApp()

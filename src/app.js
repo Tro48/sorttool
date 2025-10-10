@@ -1,10 +1,21 @@
 const { app, BrowserWindow, dialog, ipcMain, Tray, nativeTheme } = require('electron');
 const path = require('path');
 const url = require('url');
+const fs = require('fs');
 let appIconTray = null;
 let win
 const appIconPath = path.join(__dirname, "/components/app_frontend/img/app_icon.png");
-let globalSettings
+const globalSettingsPath = path.join(__dirname, '../resources/globalSettings.json')
+const scriptlSettingsPath = path.join(__dirname, '../resources/settings.json')
+const globalSettingsTemplate = {
+    autoRunScript: false,
+    startWithTheSystem: true,
+    tray: true, 
+    trayMessage: true,
+    trayMessageSound: false,
+    theme: "dark",
+    trayMessageTitle: "SortTool"
+};
 const appFolder = path.dirname(process.execPath)
 const ourExeName = path.basename(process.execPath)
 const stubLauncher = path.resolve(appFolder, '..', ourExeName)
@@ -39,7 +50,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
-    }
+    },
   });
 
   win.loadURL(url.format({
@@ -71,22 +82,34 @@ app.on('window-all-closed', () => {
   app.quit()
 });
 
+const  readSettingsFile = async (settingsPath, settingsTemplate) => {
+    let settingsData
+    try {
+        settingsData = await JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
+    } catch {
+        fs.writeFileSync(settingsPath, JSON.stringify(settingsTemplate))
+        settingsData = await JSON.parse(fs.readFileSync(settingsPath, 'utf8'))
+    }
+    return settingsData
+  }
+
 app.whenReady().then(() => {
-  ipcMain.on('settingsApp', (event, data) => {
-    globalSettings = data
-    nativeTheme.themeSource = globalSettings.theme;
-    app.setLoginItemSettings({
-      openAtLogin: globalSettings.startWithTheSystem,
-      openAsHidden: globalSettings.tray,
-      path: stubLauncher
+  readSettingsFile(globalSettingsPath, globalSettingsTemplate)
+    .then((globalSettings) => {
+        nativeTheme.themeSource = globalSettings.theme;
+        app.setLoginItemSettings({
+          openAtLogin: globalSettings.startWithTheSystem,
+          openAsHidden: globalSettings.tray,
+          path: stubLauncher
+        })
+        if (globalSettings.tray) {
+          appInTray()
+        }
+        if (globalSettings.trayMessage) {
+          ipcMain.on('trayMessage', (event, message) => {
+            appIconTray.displayBalloon({ title: globalSettings.trayMessageTitle, content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
+          })
+        }
     })
-    if (globalSettings.tray) {
-      appInTray()
-    }
-    if (globalSettings.trayMessage) {
-      ipcMain.on('trayMessage', (event, message) => {
-        appIconTray.displayBalloon({ title: globalSettings.trayMessageTitle, content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
-      })
-    }
-  })
+  readSettingsFile(scriptlSettingsPath, {})
 })
