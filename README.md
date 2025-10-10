@@ -42,4 +42,4 @@ npm run make
 ## В данный момент существует баг с отсутствием файлов настроек после сборки исполняемого файла и архива. Данную проблему планирую решить после миграции на React.  
 В архиве для скачивания этот баг исправлен ручным добавлением файлов в папку "resources".
 
-## Скачать актуальную версию программы:  [zip](https://drive.google.com/file/d/1fCnBs6HE0iF6A4-PY_GjMoW9hTezoIWU/view?usp=sharing)
+## Скачать актуальную версию программы zip :  [Win10/11(Google Drive)](https://drive.google.com/file/d/1fCnBs6HE0iF6A4-PY_GjMoW9hTezoIWU/view?usp=sharing)
