@@ -207,7 +207,7 @@ function renderSettings(settings) {
             settingsItemsSection.append(settingsItem);
             counter += 1
         })
-    }
+    } else return
 }
 
 function openModalDelete(evt) {
@@ -266,6 +266,7 @@ function saveFolderName(evt, tabItemText, inputNameFolder, abortController) {
 }
 
 function renderTagItem(settings, rootFolderId) {
+    try {
     const settingsContent = page.querySelector(config.tag + rootFolderId);
     const tagSection = settingsContent.querySelector(config.dot + config.pageClasses.tagContainer);
     tagSection.textContent = '';
@@ -278,6 +279,11 @@ function renderTagItem(settings, rootFolderId) {
         tagItem.querySelector(config.dot + config.pageClasses.button).addEventListener('click', deleteTagItem);
         tagSection.append(tagItem);
     })
+        
+    } catch (error) {
+        console.log(error)
+    }
+
 
 }
 
