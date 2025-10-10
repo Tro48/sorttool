@@ -127,6 +127,9 @@ function renderLogMessage({ message, error }, messageColor) {
         logItemBlock.classList.add(messageColor);
         logSection.append(logItemBlock);
     }
+    if(message === 'Потеря соединения с сервером! Нажмите кнопку запуска программы'){
+        activeScriptButton()
+    }
 }
 
 function renderSettings(settings) {

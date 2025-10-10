@@ -1,3 +1,5 @@
+import { error } from 'console';
+
 const { copyFile, GetCopyFileParam } = require('./components/app_backend/copyFile.mjs');
 const fs = require('fs');
 const chokidar = require('chokidar');
@@ -30,13 +32,21 @@ export class CheckForNewFiles {
         param.addLogMessage({ message: frontConfig.dot, error: false }, param.messageColor.notification);
         setTimeout(() => { copyFile(copyFileParam, param) }, 500);
     }
+    #stopError(param, error){
+        console.log(error, 'ошибка соединения')
+        param.addLogMessage({ message: 'Потеря соединения с сервером! Нажмите кнопку запуска программы', error: true }, param.messageColor.error)
+    }
     watchPlay(param) {
         this.#setRootFoldersPath()
         this.watcherFolder = chokidar.watch(this.rootFoldersPath)
-        this.watcherFolder
+        try{
+            this.watcherFolder
             .on('add', path => this.#copyFileInit(path, param))
             .on('change', path => this.#copyFileInit(path, param))
-
+            .on('error', error => this.#stopError(param, error))
+        }catch(error){
+            this.#stopError(param, error)
+        }
     }
     async watchStop() {
         await this.watcherFolder.unwatch(this.rootFoldersPath)

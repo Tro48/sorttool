@@ -32,7 +32,7 @@ ipcMain.on('click-upload', (event) => {
 })
 const createWindow = () => {
   win = new BrowserWindow({
-    icon: __dirname + "/components/app_frontend/img/app_icon.png",
+    icon: appIconPath,
     width: 1000,
     height: 1000,
     autoHideMenuBar: true,
@@ -85,7 +85,7 @@ app.whenReady().then(() => {
     }
     if (globalSettings.trayMessage) {
       ipcMain.on('trayMessage', (event, message) => {
-        appIconTray.displayBalloon({ title: 'Внимание!', content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
+        appIconTray.displayBalloon({ title: globalSettings.trayMessageTitle, content: message, noSound: globalSettings.trayMessageSound, largeIcon: false })
       })
     }
   })
