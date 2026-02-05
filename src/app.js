@@ -14,7 +14,7 @@ const globalSettingsTemplate = {
     trayMessage: true,
     trayMessageSound: false,
     theme: "dark",
-    trayMessageTitle: "SortTool"
+    trayMessageTitle: "Sort Tool"
 };
 const appFolder = path.dirname(process.execPath)
 const ourExeName = path.basename(process.execPath)
@@ -67,8 +67,8 @@ const createWindow = () => {
 };
 const appInTray = () => {
   appIconTray = new Tray(appIconPath)
-  appIconTray.setToolTip('SortTool')
-  appIconTray.setTitle('SortTool')
+  appIconTray.setToolTip(globalSettingsTemplate.trayMessageTitle)
+  appIconTray.setTitle(globalSettingsTemplate.trayMessageTitle)
   appIconTray.on('click', () => {
     win.isVisible() ? win.hide() : win.show()
   })
